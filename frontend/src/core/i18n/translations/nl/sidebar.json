@@ -1,0 +1,20 @@
+{
+    "sidebar": {
+        "main": "Hoofdmenu",
+        "dashboard": "Dashboard",
+        "learning": "Leren",
+        "revision": "Herhaling",
+        "flashcard": "Geheugenkaarten",
+        "tools": "Gereedschap",
+        "notes": "Notities",
+        "progress": "Voortgang",
+        "settings": "Instellingen"
+    },
+    "auth": {
+        "logout": "Afmelden",
+        "login": "Inloggen",
+        "register": "Registreren",
+        "logoutSuccess": "Afmelden gelukt",
+        "comeBackSoon": "Kom snel terug!"
+    }
+}

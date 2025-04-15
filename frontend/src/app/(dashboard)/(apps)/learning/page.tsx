@@ -1,7 +1,8 @@
-// src/app/%28dashboard%29/%28apps%29/learning/page.tsx
+// src/app/(dashboard)/(apps)/learning/page.tsx
+'use client';
 
-import UnitsGrid from "./_components/UnitsGrid";
+import FilteredLearningView from "../../../../addons/learning/components/LearnView";
 
 export default function Page() {
-    return <UnitsGrid />;
-  }
+    return <FilteredLearningView />;
+}

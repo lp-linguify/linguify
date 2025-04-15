@@ -1,8 +1,13 @@
-// src/app/(dashboard)/(apps)/learning/[unitId]/[lessonId]/layout.tsx
 export default function LessonLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="h-full min-h-screen bg-background">{children}</div>;
+  return (
+    <div className="min-h-screen flex flex-col bg-transparent dark:bg-transparent">
+      <main className="flex-1 overflow-auto transform scale-[0.9] origin-top">
+        {children}
+      </main>
+    </div>
+  );
 }

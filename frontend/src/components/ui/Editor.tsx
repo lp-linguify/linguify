@@ -9,7 +9,7 @@ import TaskItem from "@tiptap/extension-task-item";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import { Toolbar as EditorToolbar } from "./editor/toolbar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/core/utils/utils";
 
 interface EditorProps {
   value: string;

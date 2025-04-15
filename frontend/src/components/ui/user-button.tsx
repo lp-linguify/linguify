@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/services/AuthProvider";
 import {
   DropdownMenu,
   DropdownMenuContent,

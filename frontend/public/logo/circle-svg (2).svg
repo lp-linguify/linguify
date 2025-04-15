@@ -1,0 +1,18 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond blanc transparent -->
+  <rect width="400" height="400" fill="white" opacity="0"/>
+  
+  <!-- Cercle avec bordure grise -->
+  <circle cx="200" cy="200" r="150" fill="#ffffff" stroke="#cccccc" stroke-width="6"/>
+  
+  <!-- Texte "Linguify" au centre du cercle -->
+  <text x="200" y="200" font-family="Arial, sans-serif" font-size="60" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="url(#gradient)">Linguify</text>
+  
+  <!-- Dégradé pour le texte -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6633ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff66cc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

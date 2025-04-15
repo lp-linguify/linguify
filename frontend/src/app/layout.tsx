@@ -1,46 +1,60 @@
+// src/app/layout.tsx
+import { Inter, Poppins, Montserrat } from 'next/font/google';
 import type { Metadata } from "next";
-import { UserProvider } from '@auth0/nextjs-auth0/client';
-import { AuthProvider } from "@/providers/AuthProvider";
-import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
-import { ThemeProvider } from "next-themes";
+import Providers from "./Providers";
+
+// Configurez Inter
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+// Configurez Poppins
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+});
+
+// Configurez Montserrat
+const montserrat = Montserrat({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
 
 export const metadata: Metadata = {
-  title: "Linguify",
+  title: {
+    template: '%s | Linguify',
+    default: 'Linguify',
+  },
   description: "Language learning platform for everyone.",
   icons: {
     icon: [
-      {
-        url: "/logo.png",
-        sizes: "16x16",
-      },
-      {
-        url: "/icon.png",
-        type: "image/png",
-        sizes: "192x192",
-      }
-    ]
+      { url: '/logo/logo2.svg', type: 'image/svg+xml' },
+    ],
   }
 };
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="bg-white dark:bg-gray-900">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true} disableTransitionOnChange> 
-        <UserProvider>
-          <AuthProvider>
-            <main className="flex min-h-screen flex-col">
-              {children}
-            </main>
-            <Toaster />
-          </AuthProvider>
-        </UserProvider>
-        </ThemeProvider>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/logo/logo2.svg" type="image/svg+xml" />
+      </head>
+      <body className="bg-white dark:bg-black text-black dark:text-white font-sans">
+        <Providers>
+          <main className="flex min-h-screen flex-col bg-white dark:bg-black text-[#374151] dark:text-white font-sans">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

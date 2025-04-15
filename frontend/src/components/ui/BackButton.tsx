@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils"; // Si tu as une fonction pour combiner les classes
+import { cn } from "@/core/utils/utils"; // Si tu as une fonction pour combiner les classes
 
 interface BackButtonProps {
   children: React.ReactNode;

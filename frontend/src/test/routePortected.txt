@@ -1,0 +1,45 @@
+// Exécutez dans la console pour simuler une déconnexion
+function simulateLogout() {
+  // Sauvegarde des données d'authentification actuelles (pour les restaurer plus tard)
+  const authBackup = localStorage.getItem('auth_state');
+  console.log('1. Sauvegarde des données d'authentification');
+  
+  // Suppression des données d'authentification
+  localStorage.removeItem('auth_state');
+  document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  console.log('2. Données d'authentification supprimées');
+  
+  // Stocker la sauvegarde dans sessionStorage pour restauration
+  if (authBackup) {
+    sessionStorage.setItem('auth_backup', authBackup);
+  }
+  
+  console.log('3. Vous pouvez maintenant tester l'accès aux pages protégées');
+  console.log('4. Pour restaurer l'authentification, exécutez: restoreAuth()');
+}
+
+// Fonction pour restaurer l'authentification
+function restoreAuth() {
+  const authBackup = sessionStorage.getItem('auth_backup');
+  if (authBackup) {
+    localStorage.setItem('auth_state', authBackup);
+    
+    // Restaurer aussi le cookie
+    try {
+      const authData = JSON.parse(authBackup);
+      if (authData?.token) {
+        document.cookie = `access_token=${authData.token}; path=/; max-age=3600; SameSite=Strict`;
+      }
+    } catch (e) {
+      console.error('Erreur lors de la restauration du cookie:', e);
+    }
+    
+    sessionStorage.removeItem('auth_backup');
+    console.log('✅ Authentification restaurée');
+  } else {
+    console.log('❌ Pas de sauvegarde d'authentification trouvée');
+  }
+}
+
+// Exécuter la déconnexion simulée
+simulateLogout();

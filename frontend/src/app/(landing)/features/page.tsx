@@ -1,45 +1,31 @@
+// src/app/(landing)/features/page.tsx
 'use client';
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { GlobeIcon, BookOpen, Brain, Users, MessageCircle, UserCog } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import LanguageSwitcher from '../_components/LanguageSwitcher';
+import NewInfo from '../_components/NewInfo';
+import { getAppFeatures, FEATURE_ICONS, Feature } from '../constants/features';
 
-// Import translations (consider using a translation library like i18next or next-intl instead)
-import frTranslations from '@/locales/fr/common.json';
-import enTranslations from '@/locales/en/common.json';
-import esTranslations from '@/locales/es/common.json';
-import nlTranslations from '@/locales/nl/common.json';
+// Import translations
+import frTranslations from '@/core/i18n/translations/fr/common.json';
+import enTranslations from '@/core/i18n/translations/en/common.json';
+import esTranslations from '@/core/i18n/translations/es/common.json';
+import nlTranslations from '@/core/i18n/translations/nl/common.json';
 
 // Type definitions
 type AvailableLocales = 'fr' | 'en' | 'es' | 'nl';
 type TranslationType = typeof enTranslations;
 
-interface Feature {
-  id: keyof typeof FEATURE_ICONS;
-  title: string;
-  description: string;
-  image: string;
-}
-
-// Constants
-const FEATURE_ICONS = {
-  learning: BookOpen,
-  flashcards: Brain,
-  notebook: BookOpen, // Note: This is a duplicate icon, consider using a different one
-  community: Users,
-  chat: MessageCircle,
-  coaching: UserCog,
-};
-
-const AVAILABLE_LOCALES: AvailableLocales[] = ['en', 'fr', 'es', 'nl'];
-
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
-    transition: { 
+    transition: {
       staggerChildren: 0.1
     }
   }
@@ -47,205 +33,191 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { y: 20, opacity: 0 },
-  visible: { 
-    y: 0, 
+  visible: {
+    y: 0,
     opacity: 1,
     transition: { duration: 0.5 }
   }
 };
 
 export default function Features() {
-  const [locale, setLocale] = useState<AvailableLocales>('en');
+  const [currentLocale, setCurrentLocale] = useState<AvailableLocales>('fr');
 
-  // Function to validate locales
-  const isValidLocale = useCallback((locale: string): locale is AvailableLocales => {
-    return AVAILABLE_LOCALES.includes(locale as AvailableLocales);
+  // Load language from localStorage on startup
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage && ['fr', 'en', 'es', 'nl'].includes(savedLanguage)) {
+      setCurrentLocale(savedLanguage as AvailableLocales);
+    }
   }, []);
 
-  // Load and handle language changes
+  // Listen for language changes from other components
   useEffect(() => {
-    const updateLanguage = () => {
+    const handleLanguageChange = () => {
       const savedLanguage = localStorage.getItem('language');
-      if (savedLanguage && isValidLocale(savedLanguage)) {
-        setLocale(savedLanguage);
+      if (savedLanguage && ['fr', 'en', 'es', 'nl'].includes(savedLanguage)) {
+        setCurrentLocale(savedLanguage as AvailableLocales);
       }
     };
 
-    // Initialize
-    updateLanguage();
+    window.addEventListener('languageChanged', handleLanguageChange);
 
-    // Set up event listener
-    window.addEventListener('languageChanged', updateLanguage);
-    
-    // Cleanup
     return () => {
-      window.removeEventListener('languageChanged', updateLanguage);
+      window.removeEventListener('languageChanged', handleLanguageChange);
     };
-  }, [isValidLocale]);
+  }, []);
 
-  // Create translation map
-  const translations = useMemo<Record<AvailableLocales, TranslationType>>(() => ({
-    fr: frTranslations,
-    en: enTranslations,
-    es: esTranslations,
-    nl: nlTranslations
-  }), []);
-
-  // Translation function
-  const t = useCallback((key: string): string => {
+  // Translation helper function
+  const t = useCallback((path: string, fallback: string): string => {
     try {
-      const keys = key.split('.');
-      
-      // Make sure the locale exists, otherwise use English
-      const currentTranslation = translations[locale] || translations['en'];
-      
+      // Use type assertion to bypass type checking for translations
+      // This is a temporary fix until all translation files have the same structure
+      const translations = {
+        fr: frTranslations,
+        en: enTranslations,
+        es: esTranslations,
+        nl: nlTranslations
+      } as unknown as Record<AvailableLocales, TranslationType>;
+
+      const currentTranslation = translations[currentLocale] || translations.en;
+
+      // Split the path (e.g., "features.title") into parts
+      const keys = path.split('.');
+
       let value: any = currentTranslation;
-      for (const k of keys) {
+      // Navigate through the object using the path
+      for (const key of keys) {
         if (!value || typeof value !== 'object') {
-          console.warn(`Translation key not found: ${key} (stopped at ${k})`);
-          return key;
+          return fallback;
         }
-        value = value[k];
+        value = value[key];
       }
-      
-      return typeof value === 'string' ? value : key;
+
+      return typeof value === 'string' ? value : fallback;
     } catch (error) {
       console.error('Translation error:', error);
-      return key;
+      return fallback;
     }
-  }, [locale, translations]);
+  }, [currentLocale]);
 
   // Generate features list with translations
-  const features = useMemo<Feature[]>(() => [
-    {
-      id: 'learning',
-      title: t("learning.title"),
-      description: t("learning.description"),
-      image: "/units-pic1.png",
-    },
-    {
-      id: 'flashcards',
-      title: t("flashcards.title"),
-      description: t("flashcards.description"),
-      image: "/landing/features/flashcard-pic1.png",
-    },
-    {
-      id: 'notebook',
-      title: t("notebook.title"),
-      description: t("notebook.description"),
-      image: "/img/feature3.png",
-    },
-    {
-      id: 'community',
-      title: t("community.title"),
-      description: t("community.description"),
-      image: "/img/feature4.png",
-    },
-    {
-      id: 'chat',
-      title: t("chat.title"),
-      description: t("chat.description"),
-      image: "/img/feature5.png",
-    },
-    {
-      id: 'coaching',
-      title: t("coaching.title"),
-      description: t("coaching.description"),
-      image: "/img/feature6.png",
-    },
-  ], [t]);
+  const features = useMemo(() => getAppFeatures(t), [t]);
 
-  // Handler for feature clicks
-  const handleFeatureClick = useCallback((feature: Feature) => {
-    console.log("Feature clicked:", feature.title);
-    // Here you could add navigation to feature-specific pages
+  const FeatureCard = useCallback(({ feature }: { feature: Feature }) => {
+    const FeatureIcon = FEATURE_ICONS[feature.id] || FEATURE_ICONS.learning;
+  
+    return (
+      <Link href={feature.href} className="h-full">
+        <motion.div
+          key={feature.id}
+          className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+          variants={itemVariants}
+        >
+          <div className="p-8 flex flex-col flex-grow">
+            <div className="flex flex-col items-center text-center h-full">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <FeatureIcon className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center">
+                {feature.title}
+                <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1" />
+              </h3>
+              <p className="text-gray-600 flex-grow">{feature.description}</p>
+            </div>
+          </div>
+        </motion.div>
+      </Link>
+    );
   }, []);
 
-  // Feature card component to reduce repetition
-  const FeatureCard = useCallback(({ feature }: { feature: Feature }) => {
-    const FeatureIcon = FEATURE_ICONS[feature.id];
-    
-    return (
-      <motion.div
-        key={feature.id}
-        className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-        onClick={() => handleFeatureClick(feature)}
-        variants={itemVariants}
-      >
-        <div className="p-6">
-          <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center mb-4">
-            <FeatureIcon className="h-6 w-6 text-blue-600" />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-          <p className="text-gray-600">{feature.description}</p>
-        </div>
-        <div className="relative h-48 w-full bg-gray-100 overflow-hidden">
-          {feature.image ? (
-            <Image
-              src={feature.image}
-              alt={feature.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={feature.id === 'learning'} // Only prioritize the first image
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full">
-              <p className="text-gray-400">Image coming soon</p>
-            </div>
-          )}
-        </div>
-      </motion.div>
-    );
-  }, [handleFeatureClick]);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center p-2 bg-blue-50 rounded-full mb-4">
-            <GlobeIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Main Features Grid with Gradient Background */}
+      <section className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-[url('/pattern.svg')]"></div>
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 25%), radial-gradient(circle at 70% 65%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 30%)'
+          }}
+        ></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl font-bold text-white lg:text-5xl mb-6">
+              {t("features.modules_title", "All Linguify Apps")}
+            </h1>
+            <p className="text-xl text-indigo-100 max-w-3xl mx-auto">
+              {t("features.modules_description", "Discover all the tools Linguify offers to make your language learning journey effective and enjoyable.")}
+            </p>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 lg:text-5xl mb-6">
-            {t("features.heading")}
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t("features.subheading")}
-          </p>
-        </div>
 
-        {/* Features Grid */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {features.map(feature => (
-            <FeatureCard key={feature.id} feature={feature} />
-          ))}
-        </motion.div>
-
-        {/* Call to Action */}
-        <div className="mt-16 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("features.cta.title")}</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">{t("features.cta.description")}</p>
-          <button 
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg shadow hover:shadow-lg transition-all duration-200"
-            aria-label={t("features.cta.button")}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            {t("features.cta.button")}
-          </button>
-        </div>
+            {features.map(feature => (
+              <FeatureCard key={feature.id} feature={feature} />
+            ))}
+          </motion.div>
 
-        {/* Language Indicator (for debugging) */}
-        {process.env.NODE_ENV !== 'production' && (
-          <div className="fixed bottom-4 right-4 bg-white rounded-full shadow px-3 py-1 text-xs text-gray-500 flex items-center space-x-1">
-            <GlobeIcon className="h-3 w-3" />
-            <span>Language: {locale.toUpperCase()}</span>
+          <div className="text-center mt-8 text-white">
+            <p>{t("features.click_to_explore", "Click on any feature to explore its dedicated application")}</p>
           </div>
-        )}
+        </div>
+      </section>
+
+      {/* New Info Component */}
+      <NewInfo variant="default" />
+
+      {/* Call to Action */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            className="bg-white rounded-2xl shadow-xl p-12 border border-gray-100"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              {t("features.cta.title", "Ready to transform your language learning?")}
+            </h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              {t("features.cta.description", "Join thousands of learners who have already transformed their approach to language learning.")}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/register">
+                <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-md">
+                  {t("features.cta.button", "Start your journey")}
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/pricing">
+                <Button variant="outline" size="lg">
+                  {t("features.cta.pricing_button", "View pricing")}
+                </Button>
+              </Link>
+            </div>
+            <div className="mt-6">
+              <Link href="/features" className="text-indigo-600 hover:text-indigo-800 flex items-center justify-center">
+                <span>{t("features.explore_all_apps", "Explore all our applications")}</span>
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Language Switcher (desktop only) */}
+      <div className="fixed bottom-6 right-6 hidden md:block z-10">
+        <LanguageSwitcher
+          variant="dropdown"
+          size="sm"
+          className="shadow-md"
+        />
       </div>
     </div>
   );

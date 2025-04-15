@@ -26,7 +26,10 @@ const PUBLIC_PATHS = [
   '/register',
   '/callback',
   '/api/auth/callback',
-  '/api/auth/login'
+  '/api/auth/login',
+  '/annexes/terms',
+  '/annexes/legal',
+  '/annexes/privacy',
 ];
 
 // Routes qui nécessitent une authentification

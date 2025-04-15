@@ -1,0 +1,236 @@
+{# templates/admin/widgets/json_multilingual_widget.html #}
+{% include "django/forms/widgets/textarea.html" %}
+
+<div class="json-controls" id="controls-{{ widget.attrs.id }}">
+  <div class="json-language-buttons">
+    <span class="json-lang-label">Ajouter une langue : </span>
+    {% for lang in available_languages %}
+      <button type="button" class="json-lang-button" data-language-code="{{ lang.code }}" data-language-name="{{ lang.name }}">
+        {{ lang.code|upper }}
+      </button>
+    {% endfor %}
+  </div>
+  
+  <div class="json-actions">
+    <button type="button" class="json-format-button" data-field-id="{{ widget.attrs.id }}">Formater JSON</button>
+    <button type="button" class="json-validate-button" data-field-id="{{ widget.attrs.id }}">Valider JSON</button>
+  </div>
+  
+  <div class="json-field-info">
+    <span class="json-field-name">{{ field_name }}</span>
+    <span class="json-validation-status" id="validation-{{ widget.attrs.id }}"></span>
+  </div>
+</div>
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  const textarea = document.getElementById('{{ widget.attrs.id }}');
+  const controls = document.getElementById('controls-{{ widget.attrs.id }}');
+  const fieldName = '{{ field_name }}';
+  
+  if (!textarea || !controls) return;
+  
+  // Styliser le widget
+  textarea.classList.add('json-textarea');
+  
+  // Formater le JSON au chargement de la page
+  formatJSON();
+  
+  // Ajouter les gestionnaires d'événements aux boutons de langue
+  controls.querySelectorAll('.json-lang-button').forEach(button => {
+    button.addEventListener('click', function() {
+      const langCode = this.dataset.languageCode;
+      const langName = this.dataset.languageName;
+      addLanguageTemplate(langCode, langName);
+    });
+  });
+  
+  // Ajouter les gestionnaires d'événements aux boutons d'action
+  controls.querySelector('.json-format-button').addEventListener('click', formatJSON);
+  controls.querySelector('.json-validate-button').addEventListener('click', validateJSON);
+  
+  // Fonction pour ajouter un template de langue
+  function addLanguageTemplate(langCode, langName) {
+    // Obtenir la valeur actuelle
+    let jsonValue;
+    try {
+      jsonValue = JSON.parse(textarea.value || '{}');
+    } catch (e) {
+      jsonValue = {};
+    }
+    
+    // Si la langue existe déjà, ne pas l'écraser
+    if (jsonValue[langCode]) {
+      alert(`La langue ${langName} (${langCode}) existe déjà dans ce champ.`);
+      return;
+    }
+    
+    // Ajouter un template en fonction du type de champ
+    switch (fieldName) {
+      case 'instructions':
+        jsonValue[langCode] = `Entrez l'instruction en ${langName}`;
+        break;
+      case 'sentences':
+        jsonValue[langCode] = `Phrase avec un ___ à remplir en ${langName}`;
+        break;
+      case 'answer_options':
+        jsonValue[langCode] = [`Option 1 en ${langName}`, `Option 2 en ${langName}`, `Option 3 en ${langName}`];
+        break;
+      case 'correct_answers':
+        jsonValue[langCode] = `Réponse correcte en ${langName}`;
+        break;
+      case 'hints':
+        jsonValue[langCode] = `Indice en ${langName}`;
+        break;
+      case 'explanations':
+        jsonValue[langCode] = `Explication en ${langName}`;
+        break;
+      case 'tags':
+        if (Array.isArray(jsonValue)) {
+          // Si c'est déjà un tableau, on ne change rien
+        } else {
+          // Sinon on initialise un tableau vide
+          jsonValue = ["tag1", "tag2", "tag3"];
+        }
+        break;
+      default:
+        jsonValue[langCode] = "";
+    }
+    
+    // Mettre à jour le champ
+    textarea.value = JSON.stringify(jsonValue, null, 2);
+    validateJSON();
+  }
+  
+  // Fonction pour formater le JSON
+  function formatJSON() {
+    try {
+      const value = textarea.value.trim();
+      if (!value) return;
+      
+      const json = JSON.parse(value);
+      textarea.value = JSON.stringify(json, null, 2);
+      
+      const validationStatus = controls.querySelector('.json-validation-status');
+      validationStatus.textContent = '✓ Valide';
+      validationStatus.classList.remove('json-invalid');
+      validationStatus.classList.add('json-valid');
+    } catch (e) {
+      console.error('Error formatting JSON:', e);
+    }
+  }
+  
+  // Fonction pour valider le JSON
+  function validateJSON() {
+    const validationStatus = controls.querySelector('.json-validation-status');
+    
+    try {
+      const value = textarea.value.trim();
+      if (!value) {
+        validationStatus.textContent = '';
+        return;
+      }
+      
+      // Essayer de parser le JSON
+      JSON.parse(value);
+      
+      // Si on arrive ici, c'est que le JSON est valide
+      validationStatus.textContent = '✓ Valide';
+      validationStatus.classList.remove('json-invalid');
+      validationStatus.classList.add('json-valid');
+    } catch (e) {
+      // JSON invalide
+      validationStatus.textContent = '✗ Invalide : ' + e.message;
+      validationStatus.classList.remove('json-valid');
+      validationStatus.classList.add('json-invalid');
+    }
+  }
+});
+</script>
+
+<style>
+.json-textarea {
+  font-family: monospace;
+  min-height: 120px;
+  width: 100%;
+  tab-size: 2;
+}
+
+.json-controls {
+  margin-top: 5px;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.json-language-buttons {
+  margin-bottom: 8px;
+}
+
+.json-lang-label {
+  font-size: 12px;
+  color: #666;
+  margin-right: 5px;
+}
+
+.json-lang-button {
+  background-color: #4b70e2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 8px;
+  margin: 0 3px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.json-lang-button:hover {
+  background-color: #3a5bbf;
+}
+
+.json-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.json-format-button,
+.json-validate-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.json-format-button:hover,
+.json-validate-button:hover {
+  background-color: #e0e0e0;
+}
+
+.json-field-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.json-field-name {
+  color: #666;
+  font-style: italic;
+}
+
+.json-validation-status {
+  font-weight: bold;
+}
+
+.json-valid {
+  color: green;
+}
+
+.json-invalid {
+  color: red;
+}
+</style>

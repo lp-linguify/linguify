@@ -1,5 +1,5 @@
 // src/components/ui/gradient-text.tsx
-import { cn } from "@/lib/utils";
+import { cn } from "@/core/utils/utils";
 import { commonStyles } from "@/styles/gradient_style";
 import { HTMLAttributes } from "react";
 

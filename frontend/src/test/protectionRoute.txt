@@ -1,0 +1,40 @@
+function simulateProtectedRoute() {
+  console.log('🛡️ SIMULATING PROTECTED ROUTE');
+  console.log('--------------------------');
+  
+  const isAuthenticated = !!localStorage.getItem('auth_state');
+  console.log('1. Authentication state:', isAuthenticated ? 'Authenticated ✅' : 'Not authenticated ❌');
+  
+  // Simulation of a component's useEffect for route protection
+  console.log('2. Simulating route protection logic...');
+  
+  if (!isAuthenticated) {
+    console.log('3. User not authenticated, would redirect to /login');
+    console.log('4. Adding return_to parameter:', window.location.pathname);
+  } else {
+    console.log('3. User is authenticated, would render protected content');
+    
+    // Simulate loading user data
+    console.log('4. Would fetch user data from /api/auth/me');
+    fetch('/api/auth/me', {
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('auth_state')).token}`
+      }
+    })
+    .then(res => {
+      console.log('5. User data response status:', res.status);
+      return res.json();
+    })
+    .then(data => {
+      console.log('6. User data successfully loaded:', data.name);
+      console.log('✅ PROTECTED ROUTE SIMULATION SUCCESSFUL');
+    })
+    .catch(err => {
+      console.error('6. Error fetching user data:', err);
+      console.log('❌ PROTECTED ROUTE SIMULATION FAILED');
+    });
+  }
+}
+
+// Start simulation
+simulateProtectedRoute();

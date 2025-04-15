@@ -1,0 +1,58 @@
+function testTokenExpiry() {
+  console.log('⏱️ TESTING TOKEN EXPIRY HANDLING');
+  console.log('-------------------------------');
+  
+  // Backup current token
+  const currentAuthData = localStorage.getItem('auth_state');
+  console.log('1. Backing up current token');
+  
+  // Create expired token (modified payload with past exp date)
+  const expiredToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkV4cGlyZWQgVG9rZW4iLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTU4MDAwMDAwMH0.signature';
+  
+  // Replace with expired token
+  if (currentAuthData) {
+    const authData = JSON.parse(currentAuthData);
+    const originalToken = authData.token;
+    authData.token = expiredToken;
+    localStorage.setItem('auth_state', JSON.stringify(authData));
+    document.cookie = `access_token=${expiredToken}; path=/; max-age=3600; SameSite=Strict`;
+    console.log('2. Replaced with expired token');
+    
+    // Test API call with expired token
+    console.log('3. Testing API with expired token...');
+    fetch('/api/auth/me', {
+      headers: {
+        'Authorization': `Bearer ${expiredToken}`
+      }
+    })
+    .then(res => {
+      console.log('4. Response status:', res.status);
+      return res.text();
+    })
+    .then(data => {
+      console.log('5. Response:', data);
+      
+      // Restore original token
+      authData.token = originalToken;
+      localStorage.setItem('auth_state', JSON.stringify(authData));
+      document.cookie = `access_token=${originalToken}; path=/; max-age=3600; SameSite=Strict`;
+      console.log('6. Restored original token');
+      console.log('✅ TEST COMPLETE');
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      
+      // Restore original token
+      authData.token = originalToken;
+      localStorage.setItem('auth_state', JSON.stringify(authData));
+      document.cookie = `access_token=${originalToken}; path=/; max-age=3600; SameSite=Strict`;
+      console.log('6. Restored original token after error');
+      console.log('❌ TEST FAILED');
+    });
+  } else {
+    console.log('❌ No auth data to test with');
+  }
+}
+
+// Start test
+testTokenExpiry();

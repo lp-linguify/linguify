@@ -1,5 +1,5 @@
 // src/components/ui/gradient-card.tsx
-import { cn } from "@/lib/utils"
+import { cn } from "@/core/utils/utils"
 
 interface GradientCardProps {
   children: React.ReactNode;

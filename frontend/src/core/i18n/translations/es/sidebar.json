@@ -1,0 +1,21 @@
+{
+    "sidebar": {
+        "main": "Principal",
+        "dashboard": "Panel de control",
+        "learning": "Aprendizaje",
+        "revision": "Repaso",
+        "flashcard": "Tarjetas de memoria",
+        "tools": "Herramientas",
+        "notes": "Notas",
+        "progress": "Progreso",
+        "settings": "Configuración"
+    },
+    "auth": {
+        "logout": "Cerrar sesión",
+        "login": "Iniciar sesión",
+        "register": "Registrar",
+        "logoutSuccess": "Cierre de sesión exitoso",
+        "comeBackSoon": "¡Vuelve pronto!"
+      }
+      }
+  

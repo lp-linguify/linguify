@@ -1,0 +1,16 @@
+/* Amélioration visuelle de l'interface */
+.professional-settings .form-row {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-left: 3px solid #17a2b8;
+}
+
+.field-get_professional_field {
+    font-weight: bold;
+}
+
+/* Indicateur visuel pour le champ obligatoire */
+#id_professional_field[required] + label:after {
+    content: " *";
+    color: red;
+}

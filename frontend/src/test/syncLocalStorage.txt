@@ -1,0 +1,47 @@
+function testTokenSync() {
+  console.log('🔄 TESTING TOKEN SYNC');
+  console.log('-------------------');
+  
+  // Get current values
+  const authData = JSON.parse(localStorage.getItem('auth_state') || 'null');
+  const cookies = document.cookie.split(';').map(c => c.trim());
+  const accessTokenCookie = cookies.find(c => c.startsWith('access_token='));
+  const cookieToken = accessTokenCookie ? accessTokenCookie.split('=')[1] : null;
+  
+  console.log('1. Token in localStorage:', authData?.token ? 'Present' : 'Missing');
+  console.log('2. Token in cookies:', cookieToken ? 'Present' : 'Missing');
+  
+  if (authData?.token && cookieToken) {
+    const localStoragePreview = authData.token.substring(0, 20);
+    const cookiePreview = cookieToken.substring(0, 20);
+    
+    console.log('3. localStorage token preview:', localStoragePreview);
+    console.log('4. Cookie token preview:', cookiePreview);
+    console.log('5. Tokens match:', localStoragePreview === cookiePreview ? 'Yes ✅' : 'No ❌');
+  } else {
+    console.log('❌ Cannot compare tokens - one or both are missing');
+  }
+  
+  // Test synchronization through auth.js function
+  console.log('\n6. Testing token synchronization through getAccessToken()...');
+  
+  // You would need to import your getAccessToken function
+  // For this test, we'll simulate its behavior
+  if (typeof getAccessToken === 'function') {
+    const token = getAccessToken();
+    console.log('7. getAccessToken returned:', token ? 'Token ✅' : 'null ❌');
+    
+    // Check if cookie was updated
+    const updatedCookies = document.cookie.split(';').map(c => c.trim());
+    const updatedAccessTokenCookie = updatedCookies.find(c => c.startsWith('access_token='));
+    
+    console.log('8. Cookie after getAccessToken:', updatedAccessTokenCookie ? 'Present ✅' : 'Missing ❌');
+  } else {
+    console.log('7. Cannot test getAccessToken - function not available in this context');
+  }
+  
+  console.log('✅ TEST COMPLETE');
+}
+
+// Start test
+testTokenSync();

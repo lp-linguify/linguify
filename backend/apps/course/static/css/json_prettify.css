@@ -1,0 +1,216 @@
+/* static/admin/css/json_prettify.css */
+
+/* Styles pour les champs JSON */
+.json-editor {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 14px;
+    padding: 10px;
+    line-height: 1.5;
+    tab-size: 2;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 120px;
+  }
+  
+  /* Barre d'outils pour les champs JSON */
+  .json-toolbar {
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .json-toolbar button {
+    padding: 5px 10px;
+    background-color: #79aec8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .json-toolbar button:hover {
+    background-color: #417690;
+  }
+  
+  .json-toolbar .preview-btn {
+    background-color: #8bc34a;
+  }
+  
+  .json-toolbar .preview-btn:hover {
+    background-color: #689f38;
+  }
+  
+  .json-toolbar .validate-langs-btn {
+    background-color: #ff9800;
+  }
+  
+  .json-toolbar .validate-langs-btn:hover {
+    background-color: #ef6c00;
+  }
+  
+  /* Statut de validation JSON */
+  .json-status {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  
+  .json-status.valid {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+  }
+  
+  .json-status.invalid {
+    color: #c62828;
+    background-color: #ffebee;
+  }
+  
+  /* Prévisualisation des phrases */
+  .sentence-preview-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+  
+  .sentence-preview-container h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #417690;
+    font-size: 16px;
+  }
+  
+  .sentence-preview {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+  }
+  
+  .language-label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: #417690;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .sentence {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .blank-placeholder {
+    display: inline-block;
+    padding: 0 5px;
+    border-bottom: 2px solid #e91e63;
+    margin: 0 2px;
+    color: #e91e63;
+    font-weight: bold;
+  }
+  
+  /* Validation croisée des langues */
+  .cross-validation-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+  
+  .cross-validation-container h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #417690;
+    font-size: 16px;
+  }
+  
+  .lang-validation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+  
+  .lang-validation-table th,
+  .lang-validation-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .lang-validation-table th {
+    background-color: #417690;
+    color: white;
+    font-weight: normal;
+  }
+  
+  .lang-validation-table tr.incomplete {
+    background-color: #ffebee;
+  }
+  
+  .lang-validation-table tr.complete {
+    background-color: #e8f5e9;
+  }
+  
+  .lang-validation-table td:first-child {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .lang-validation-table td.status {
+    font-weight: bold;
+  }
+  
+  .lang-validation-table td.status.complete {
+    color: #2e7d32;
+  }
+  
+  .lang-validation-table td.status.incomplete {
+    color: #c62828;
+  }
+  
+  .validation-summary {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .validation-summary p {
+    margin: 5px 0;
+  }
+  
+  .error {
+    color: #c62828;
+    font-weight: bold;
+  }
+  
+  /* Responsive */
+  @media screen and (max-width: 1024px) {
+    .json-toolbar {
+      flex-wrap: wrap;
+    }
+    
+    .lang-validation-table {
+      font-size: 14px;
+    }
+  }

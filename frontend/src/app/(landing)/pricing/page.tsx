@@ -1,15 +1,83 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container } from "../_components/Container";
 import { Check, X } from "lucide-react";
+import LanguageSwitcher from '../_components/LanguageSwitcher';
 
-export default function Pricing() {
+// Import translations
+import frTranslations from '@/core/i18n/translations/fr/common.json';
+import enTranslations from '@/core/i18n/translations/en/common.json';
+import esTranslations from '@/core/i18n/translations/es/common.json';
+import nlTranslations from '@/core/i18n/translations/nl/common.json';
+
+// Type definitions
+type AvailableLocales = 'fr' | 'en' | 'es' | 'nl';
+type TranslationType = typeof enTranslations;
+
+export default function PricingPage() {
     const [isAnnual, setIsAnnual] = useState(false);
+    const [currentLocale, setCurrentLocale] = useState<AvailableLocales>('fr');
+
+    // Load language from localStorage on startup
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage && ['fr', 'en', 'es', 'nl'].includes(savedLanguage)) {
+            setCurrentLocale(savedLanguage as AvailableLocales);
+        }
+    }, []);
+
+    // Listen for language changes from other components
+    useEffect(() => {
+        const handleLanguageChange = () => {
+            const savedLanguage = localStorage.getItem('language');
+            if (savedLanguage && ['fr', 'en', 'es', 'nl'].includes(savedLanguage)) {
+                setCurrentLocale(savedLanguage as AvailableLocales);
+            }
+        };
+
+        window.addEventListener('languageChanged', handleLanguageChange);
+
+        return () => {
+            window.removeEventListener('languageChanged', handleLanguageChange);
+        };
+    }, []);
+
+    // Translation helper function
+    const t = useCallback((path: string, fallback: string): string => {
+        try {
+            // Use type assertion to bypass type checking for translations
+            const translations = {
+                fr: frTranslations,
+                en: enTranslations,
+                es: esTranslations,
+                nl: nlTranslations
+            } as unknown as Record<AvailableLocales, TranslationType>;
+
+            const currentTranslation = translations[currentLocale] || translations.en;
+
+            // Split the path (e.g., "pricingPage.title") into parts
+            const keys = path.split('.');
+
+            let value: any = currentTranslation;
+            // Navigate through the object using the path
+            for (const key of keys) {
+                if (!value || typeof value !== 'object') {
+                    return fallback;
+                }
+                value = value[key];
+            }
+
+            return typeof value === 'string' ? value : fallback;
+        } catch (error) {
+            console.error('Translation error:', error);
+            return fallback;
+        }
+    }, [currentLocale]);
 
     const plans = [
         {
-            name: "Free",
-            description: "Perfect for getting started with language learning",
+            name: t("pricingPage.plans.free.name", "Free"),
+            description: t("pricingPage.plans.free.description", "Perfect for getting started with language learning"),
             price: {
                 monthly: 0,
                 annually: 0
@@ -17,49 +85,49 @@ export default function Pricing() {
             features: [
                 {
                     included: true,
-                    text: "Access to basic learning modules",
-                    tooltip: "Learn fundamentals in your chosen language"
+                    text: t("pricingPage.plans.free.features.basic_modules", "Access to basic learning modules"),
+                    tooltip: t("pricingPage.plans.free.tooltips.basic_modules", "Learn fundamentals in your chosen language")
                 },
                 {
                     included: true,
-                    text: "Core vocabulary exercises",
-                    tooltip: "Practice essential words and phrases"
+                    text: t("pricingPage.plans.free.features.core_vocabulary", "Core vocabulary exercises"),
+                    tooltip: t("pricingPage.plans.free.tooltips.core_vocabulary", "Practice essential words and phrases")
                 },
                 {
                     included: true,
-                    text: "Basic progress tracking",
-                    tooltip: "Monitor your learning journey"
+                    text: t("pricingPage.plans.free.features.basic_tracking", "Basic progress tracking"),
+                    tooltip: t("pricingPage.plans.free.tooltips.basic_tracking", "Monitor your learning journey")
                 },
                 {
                     included: true,
-                    text: "Limited practice exercises",
-                    tooltip: "Access to beginner-level exercises"
+                    text: t("pricingPage.plans.free.features.limited_exercises", "Limited practice exercises"),
+                    tooltip: t("pricingPage.plans.free.tooltips.limited_exercises", "Access to beginner-level exercises")
                 },
                 {
                     included: true,
-                    text: "Community forum access",
-                    tooltip: "Connect with fellow learners"
+                    text: t("pricingPage.plans.free.features.community", "Community forum access"),
+                    tooltip: t("pricingPage.plans.free.tooltips.community", "Connect with fellow learners")
                 },
                 {
                     included: false,
-                    text: "Live tutoring sessions",
-                    tooltip: "One-on-one sessions with native speakers"
+                    text: t("pricingPage.plans.free.features.tutoring", "Live tutoring sessions"),
+                    tooltip: t("pricingPage.plans.free.tooltips.tutoring", "One-on-one sessions with native speakers")
                 },
                 {
                     included: false,
-                    text: "Advanced analytics",
-                    tooltip: "Detailed insights into your learning"
+                    text: t("pricingPage.plans.free.features.analytics", "Advanced analytics"),
+                    tooltip: t("pricingPage.plans.free.tooltips.analytics", "Detailed insights into your learning")
                 },
                 {
                     included: false,
-                    text: "Offline access",
-                    tooltip: "Learn without internet connection"
+                    text: t("pricingPage.plans.free.features.offline", "Offline access"),
+                    tooltip: t("pricingPage.plans.free.tooltips.offline", "Learn without internet connection")
                 }
             ]
         },
         {
-            name: "Premium",
-            description: "Full access to all Linguify features",
+            name: t("pricingPage.plans.premium.name", "Premium"),
+            description: t("pricingPage.plans.premium.description", "Full access to all Linguify features"),
             price: {
                 monthly: 15,
                 annually: 150
@@ -67,43 +135,43 @@ export default function Pricing() {
             features: [
                 {
                     included: true,
-                    text: "All Free features",
-                    tooltip: "Everything in the Free plan"
+                    text: t("pricingPage.plans.premium.features.all_free", "All Free features"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.all_free", "Everything in the Free plan")
                 },
                 {
                     included: true,
-                    text: "Unlimited language courses",
-                    tooltip: "Learn multiple languages simultaneously"
+                    text: t("pricingPage.plans.premium.features.unlimited", "Unlimited language courses"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.unlimited", "Learn multiple languages simultaneously")
                 },
                 {
                     included: true,
-                    text: "Live tutoring sessions",
-                    tooltip: "Weekly sessions with native speakers"
+                    text: t("pricingPage.plans.premium.features.tutoring", "Live tutoring sessions"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.tutoring", "Weekly sessions with native speakers")
                 },
                 {
                     included: true,
-                    text: "Advanced progress analytics",
-                    tooltip: "Detailed insights and recommendations"
+                    text: t("pricingPage.plans.premium.features.analytics", "Advanced progress analytics"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.analytics", "Detailed insights and recommendations")
                 },
                 {
                     included: true,
-                    text: "Personalized learning path",
-                    tooltip: "AI-powered custom curriculum"
+                    text: t("pricingPage.plans.premium.features.personalized", "Personalized learning path"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.personalized", "AI-powered custom curriculum")
                 },
                 {
                     included: true,
-                    text: "Offline mode",
-                    tooltip: "Learn anywhere, anytime"
+                    text: t("pricingPage.plans.premium.features.offline", "Offline mode"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.offline", "Learn anywhere, anytime")
                 },
                 {
                     included: true,
-                    text: "Priority support",
-                    tooltip: "24/7 dedicated assistance"
+                    text: t("pricingPage.plans.premium.features.support", "Priority support"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.support", "24/7 dedicated assistance")
                 },
                 {
                     included: true,
-                    text: "Certificate of completion",
-                    tooltip: "Official certification for completed courses"
+                    text: t("pricingPage.plans.premium.features.certificate", "Certificate of completion"),
+                    tooltip: t("pricingPage.plans.premium.tooltips.certificate", "Official certification for completed courses")
                 }
             ],
             popular: true
@@ -116,13 +184,13 @@ export default function Pricing() {
                 {/* Header Section */}
                 <div className="text-center mb-16">
                     <p className="text-base font-semibold text-indigo-600 dark:text-indigo-400 mb-2">
-                        Pricing Plans
+                        {t("pricingPage.header.subtitle", "PricingPage Plans")}
                     </p>
                     <h1 className="text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl mb-4">
-                        Choose Your Learning Journey
+                        {t("pricingPage.header.title", "Choose Your Learning Journey")}
                     </h1>
                     <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Start for free and upgrade when you're ready to unlock all features
+                        {t("pricingPage.header.description", "Start for free and upgrade when you're ready to unlock all features")}
                     </p>
                 </div>
 
@@ -130,41 +198,41 @@ export default function Pricing() {
                 <div className="flex items-center gap-3 mb-12 bg-gray-50 dark:bg-gray-800 p-2 rounded-full">
                     <button
                         className={`px-4 py-2 rounded-full transition-all ${!isAnnual
-                                ? 'bg-white dark:bg-gray-700 shadow-sm text-indigo-600 dark:text-white'
-                                : 'text-gray-600 dark:text-gray-400'
+                            ? 'bg-white dark:bg-gray-700 shadow-sm text-indigo-600 dark:text-white'
+                            : 'text-gray-600 dark:text-gray-400'
                             }`}
                         onClick={() => setIsAnnual(false)}
                     >
-                        Monthly
+                        {t("pricingPage.billing.monthly", "Monthly")}
                     </button>
                     <button
                         className={`px-4 py-2 rounded-full transition-all ${isAnnual
-                                ? 'bg-white dark:bg-gray-700 shadow-sm text-indigo-600 dark:text-white'
-                                : 'text-gray-600 dark:text-gray-400'
+                            ? 'bg-white dark:bg-gray-700 shadow-sm text-indigo-600 dark:text-white'
+                            : 'text-gray-600 dark:text-gray-400'
                             }`}
                         onClick={() => setIsAnnual(true)}
                     >
-                        Annually
+                        {t("pricingPage.billing.annually", "Annually")}
                         <span className="ml-2 inline-block bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs px-2 py-0.5 rounded-full">
-                            Save 17%
+                            {t("pricingPage.billing.discount", "Save 17%")}
                         </span>
                     </button>
                 </div>
 
-                {/* Pricing Cards */}
+                {/* PricingPage Cards */}
                 <div className="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
                     {plans.map((plan) => (
                         <div
                             key={plan.name}
                             className={`relative flex flex-col p-8 bg-white dark:bg-gray-800 rounded-xl ${plan.popular
-                                    ? 'border-2 border-indigo-600 shadow-xl'
-                                    : 'border border-gray-200 dark:border-gray-700'
+                                ? 'border-2 border-indigo-600 shadow-xl'
+                                : 'border border-gray-200 dark:border-gray-700'
                                 }`}
                         >
                             {plan.popular && (
                                 <div className="absolute -top-5 left-0 w-full flex justify-center">
                                     <span className="inline-block bg-indigo-600 text-white text-sm font-semibold px-4 py-1 rounded-full shadow-lg">
-                                        Most Popular
+                                        {t("pricingPage.popular_badge", "Most Popular")}
                                     </span>
                                 </div>
                             )}
@@ -185,13 +253,15 @@ export default function Pricing() {
                                     </span>
                                     {plan.price.monthly > 0 && (
                                         <span className="text-gray-600 dark:text-gray-400 ml-2 mb-2">
-                                            /{isAnnual ? 'year' : 'month'}
+                                            /{isAnnual 
+                                              ? t("pricingPage.period.yearly", "year") 
+                                              : t("pricingPage.period.monthly", "month")}
                                         </span>
                                     )}
                                 </div>
                                 {plan.popular && isAnnual && (
                                     <p className="text-sm text-green-600 dark:text-green-400 mt-2">
-                                        €12.50/month billed annually
+                                        {t("pricingPage.monthly_equivalent", "€12.50/month billed annually")}
                                     </p>
                                 )}
                             </div>
@@ -205,13 +275,11 @@ export default function Pricing() {
                                     >
                                         {feature.included ? (
                                             <Check className="w-5 h-5 text-green-500" />
-
-
                                         ) : (
                                             <X className="w-5 h-5 text-red-500" />)}
                                         <span className={`${feature.included
-                                                ? 'text-gray-600 dark:text-gray-300'
-                                                : 'text-gray-400 dark:text-gray-500'
+                                            ? 'text-gray-600 dark:text-gray-300'
+                                            : 'text-gray-400 dark:text-gray-500'
                                             }`}>
                                             {feature.text}
                                         </span>
@@ -227,11 +295,13 @@ export default function Pricing() {
 
                             <button
                                 className={`w-full py-4 px-6 rounded-lg font-semibold transition-all transform hover:scale-[1.02] ${plan.popular
-                                        ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/30'
-                                        : 'bg-gray-100 hover:bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600'
+                                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/30'
+                                    : 'bg-gray-100 hover:bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600'
                                     }`}
                             >
-                                {plan.price.monthly === 0 ? 'Get Started Free' : 'Get Premium Access'}
+                                {plan.price.monthly === 0 
+                                  ? t("pricingPage.cta.free", "Get Started Free") 
+                                  : t("pricingPage.cta.premium", "Get Premium Access")}
                             </button>
                         </div>
                     ))}
@@ -240,19 +310,27 @@ export default function Pricing() {
                 {/* FAQ Section */}
                 <div className="mt-20 text-center">
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                        Common Questions
+                        {t("pricingPage.faq.title", "Common Questions")}
                     </h2>
                     <p className="text-gray-600 dark:text-gray-400 space-x-1">
-                        <span>Need more info?</span>
+                        <span>{t("pricingPage.faq.need_more", "Need more info?")}</span>
                         <a href="/faq" className="text-indigo-600 hover:text-indigo-500 underline">
-                            Visit our FAQ
+                            {t("pricingPage.faq.visit_faq", "Visit our FAQ")}
                         </a>
-                        <span>or</span>
+                        <span>{t("pricingPage.faq.or", "or")}</span>
                         <a href="/contact" className="text-indigo-600 hover:text-indigo-500 underline">
-                            contact our team
+                            {t("pricingPage.faq.contact", "contact our team")}
                         </a>
                     </p>
                 </div>
+            </div>
+            {/* Language Switcher (desktop only) */}
+            <div className="fixed bottom-6 right-6 hidden md:block z-10">
+                <LanguageSwitcher
+                    variant="dropdown"
+                    size="sm"
+                    className="shadow-md"
+                />
             </div>
         </Container>
     );

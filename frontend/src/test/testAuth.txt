@@ -1,0 +1,75 @@
+// Run the code into the console of the navigator
+function testAuth() {
+  console.clear();
+  console.log('🔍 AUTHENTICATION TEST REPORT 🔍');
+  console.log('---------------------------------');
+  
+  // 1. Check localStorage
+  const authRaw = localStorage.getItem('auth_state');
+  console.log('1. Auth data in localStorage:', authRaw ? 'Present' : 'Missing');
+  
+  let authData = null;
+  try {
+    authData = authRaw ? JSON.parse(authRaw) : null;
+    console.log('   Parsed successfully:', authData ? 'Yes' : 'No');
+    if (authData) {
+      console.log('   Token present:', authData.token ? 'Yes' : 'No');
+      console.log('   Token length:', authData.token ? authData.token.length : 0);
+      console.log('   Token preview:', authData.token ? `${authData.token.substring(0, 15)}...` : 'N/A');
+      console.log('   User data:', authData.user ? 'Present' : 'Missing');
+    }
+  } catch (e) {
+    console.error('   Parse error:', e);
+  }
+  
+  // 2. Check cookies
+  console.log('\n2. Cookies:');
+  const cookies = document.cookie.split(';').map(c => c.trim());
+  console.log('   All cookies:', cookies.length ? cookies.join(', ') : 'No cookies');
+  const accessTokenCookie = cookies.find(c => c.startsWith('access_token='));
+  console.log('   access_token cookie:', accessTokenCookie ? 'Present' : 'Missing');
+  if (accessTokenCookie) {
+    const tokenValue = accessTokenCookie.split('=')[1];
+    console.log('   Cookie token preview:', tokenValue ? `${tokenValue.substring(0, 15)}...` : 'Empty');
+  }
+  
+  // 3. Test API call
+  console.log('\n3. Testing API endpoint:');
+  if (authData?.token) {
+    console.log('   Making request with token from localStorage...');
+    return fetch('/api/auth/me', {
+      headers: {
+        'Authorization': `Bearer ${authData.token}`
+      }
+    })
+    .then(res => {
+      console.log('   Status:', res.status, res.statusText);
+      console.log('   Headers:', Object.fromEntries([...res.headers]));
+      return res.text();
+    })
+    .then(data => {
+      console.log('   Raw response:', data);
+      try {
+        const jsonData = JSON.parse(data);
+        console.log('   JSON data:', jsonData);
+        console.log('\n✅ TEST COMPLETE ✅');
+      } catch (e) {
+        console.log('   Not valid JSON data');
+        console.log('\n❌ TEST COMPLETE WITH PARSING ERROR ❌');
+      }
+    })
+    .catch(err => {
+      console.error('   Fetch error:', err);
+      console.log('\n❌ TEST FAILED ❌');
+    });
+  } else {
+    console.log('   No token available for testing');
+    console.log('\n❌ TEST INCOMPLETE - NO TOKEN ❌');
+    return Promise.resolve();
+  }
+}
+
+
+
+// Run the test
+testAuth();

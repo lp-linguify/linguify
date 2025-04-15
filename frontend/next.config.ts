@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   i18n: {
     // Liste des langues prises en charge (extensible jusqu'à 25 langues)
     locales: [
-      'fr', 'en', 'es', 'de', 'it', 
+      'fr', 'en', 'es', 'nl'
       // Ajoutez d'autres langues au fur et à mesure
       // 'pt', 'zh', 'ja', 'ko', 'ru', 
       // 'ar', 'hi', 'bn', 'id', 'ms', 

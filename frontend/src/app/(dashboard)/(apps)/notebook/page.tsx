@@ -1,7 +1,7 @@
 // src/app/(dashboard)/(apps)/notebook/page.tsx
 "use client";
 
-import NotebookApp from './_components/NotebookApp';
+import NotebookApp from '../../../../addons/notebook/components/NotebookApp';
 
 export default function NotebookPage() {
   return (

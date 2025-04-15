@@ -1,0 +1,46 @@
+/* frontend/src/app/(dashboard)/_components/ThemeToggle/styles.css */
+/* Theme toggle transition styles */
+
+@media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+      mix-blend-mode: normal;
+    }
+  
+    /* Customize the transition with a circle shape */
+    ::view-transition-old(root) {
+      opacity: 1;
+    }
+    
+    ::view-transition-new(root) {
+      opacity: 0;
+    }
+  
+    .dark::view-transition-old(root) {
+      opacity: 0;
+    }
+    
+    .dark::view-transition-new(root) {
+      opacity: 1;
+    }
+  
+    /* Apply the circle mask effect */
+    html.theme-transition::view-transition-old(root) {
+      mask: radial-gradient(
+        circle at var(--x, center) var(--y, center),
+        transparent 0%,
+        transparent 0%,
+        black 100%
+      );
+    }
+    
+    html.theme-transition::view-transition-new(root) {
+      mask: radial-gradient(
+        circle at var(--x, center) var(--y, center),
+        black 0%,
+        black 0%,
+        transparent 100%
+      );
+    }
+  }

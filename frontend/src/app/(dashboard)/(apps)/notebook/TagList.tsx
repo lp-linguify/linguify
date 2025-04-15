@@ -1,6 +1,6 @@
 // src/components/notes/TagList.tsx
 import React from 'react';
-import { Tag } from '@/types/notebook';
+import { Tag } from '@/addons/notebook/types';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 

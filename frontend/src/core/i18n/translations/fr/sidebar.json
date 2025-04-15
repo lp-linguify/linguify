@@ -1,0 +1,20 @@
+{
+  "sidebar": {
+    "main": "Principal",
+    "dashboard": "Accueil",
+    "learning": "Apprendre",
+    "revision": "Révision",
+    "flashcard": "Mémoire",
+    "tools": "Outils",
+    "notes": "Notes",
+    "progress": "Progression",
+    "settings": "Paramètres"
+  },
+  "auth": {
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logoutSuccess": "Déconnexion réussie",
+    "comeBackSoon": "Revenez bientôt !"
+  }
+  }

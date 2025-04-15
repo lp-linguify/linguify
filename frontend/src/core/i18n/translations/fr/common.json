@@ -1,0 +1,567 @@
+{
+  "header": "Fonctionnalités",
+  "pricing": {
+    "title": "Des forfaits adaptés à vos besoins",
+    "subtitle": "Choisissez l'offre qui correspond à vos objectifs et à votre rythme d'apprentissage.",
+    "most_popular": "Le plus populaire",
+    "free": {
+      "name": "Gratuit",
+      "price": "0€",
+      "period": "pour toujours",
+      "description": "Parfait pour débuter et tester l'application",
+      "feature1": "1 langue au choix",
+      "feature2": "Accès aux leçons de base",
+      "feature3": "5 minutes de chat par jour",
+      "feature4": "Révisions limitées",
+      "cta": "Commencer gratuitement"
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "9,99€",
+      "period": "par mois",
+      "description": "Notre formule la plus populaire pour progresser",
+      "feature1": "Toutes les langues accessibles",
+      "feature2": "Leçons avancées et spécialisées",
+      "feature3": "Chat illimité avec l'IA",
+      "feature4": "Système complet de révision",
+      "feature5": "Coaching hebdomadaire",
+      "cta": "Essai gratuit de 7 jours"
+    },
+    "enterprise": {
+      "name": "Entreprise",
+      "price": "Sur mesure",
+      "period": "",
+      "description": "Solution complète pour les équipes",
+      "feature1": "Formations personnalisées",
+      "feature2": "Tableau de bord d'entreprise",
+      "feature3": "Suivi des progrès de l'équipe",
+      "feature4": "Intégration LMS",
+      "feature5": "Support dédié",
+      "cta": "Contacter les ventes"
+    }
+  },
+  "testimonials": {
+    "louis": {
+      "role": "Customer Service Manager",
+      "text": "J'ai toujours eu du mal à apprendre une nouvelle langue, mais Linguify a rendu le processus tellement plus facile et amusant."},
+    "victor": {
+      "role": "Project Director",
+      "text": "J'ai eu beaucoup de mal à trouver une méthode d'apprentissage qui me convienne, mais Linguify a vraiment répondu à mes attentes."},
+    "camille": {
+      "role": "Risk and Strategy Analyst",
+      "text": "Je suis impressionnée par la qualité des leçons et la variété des exercices proposés. Linguify est vraiment une application complète."},
+    "title": "What our users say",
+    "subtitle": "Discover how Linguify has helped learners around the world achieve their language goals."
+  },
+  "stats": {
+    "countries": "Pays représentés",
+    "languages": "Langues disponibles",
+    "units": "Unités d'apprentissage dans chaque langue",
+    "lessons": "Leçons interactives",
+    "words": "Mots, phrases et expressions"
+  },
+  "nav": {
+    "home": "Accueil",
+    "features": "Applications",
+    "pricing": "Tarifs",
+    "company": "Entreprise",
+    "contact": "Contact"
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signInProgress": "Connexion...",
+    "logOut": "Déconnexion",
+    "logOutProgress": "Déconnexion...",
+    "tryFree": "Essayer gratuitement",
+    "register": "S'inscrire"
+  },
+  "mobile": {
+    "language": "Langue"
+  },
+  "learning": {
+    "title": "Apprentissage",
+    "description": "Modules d'apprentissage interactifs adaptés à votre rythme"
+  },
+  "flashcards": {
+    "title": "Mémoire",
+    "description": "Outils de mémorisation efficaces pour une rétention rapide"
+  },
+  "notebook": {
+    "title": "Carnet de notes",
+    "description": "Prise de notes centralisée avec organisation intelligente"
+  },
+  "progress": {
+    "title": "Progression",
+    "description": "Suivez votre évolution et fixez-vous des objectifs pour rester motivé"
+  },
+  "community": {
+    "title": "Communauté",
+    "description": "Échangez et apprenez avec d'autres utilisateurs"
+  },
+  "chat": {
+    "title": "Discussion",
+    "description": "Communiquez en temps réel avec votre réseau"
+  },
+  "coaching": {
+    "title": "Coaching avec tuteurs",
+    "description": "Accompagnement personnalisé avec des experts du domaine"
+  },
+  "certification": {
+    "title": "Certification",
+    "description": "Obtenez des certificats reconnus pour vos compétences"
+  },
+  "hero": {
+    "title": "Apprenez une nouvelle langue à votre rythme !",
+    "subtitle": "Tout ce dont vous avez besoin pour apprendre une nouvelle langue où que vous soyez.",
+    "start_button": "Commencer gratuitement",
+    "discover_button": "Découvrir nos applications",
+    "screenshot_alt": "Interface de l'application Linguify",
+    "image_placeholder": "(Image non disponible)"
+  },
+  "languages": {
+    "title": "Explorez notre catalogue de langues",
+    "subtitle": "Choisissez parmi plus de 25 langues et commencez à apprendre dès aujourd'hui.",
+    "choose": "Quelle langue souhaitez-vous apprendre ?",
+    "learn_minutes": "Apprenez {language} en 10 minutes par jour",
+    "description": "Nos leçons courtes et efficaces s'adaptent à votre emploi du temps chargé. Progressez de manière constante sans y consacrer des heures.",
+    "benefit1": "Plus de 5000 mots et phrases avec prononciation native",
+    "benefit2": "Exercices de conversation avec IA pour une pratique illimitée",
+    "benefit3": "Contenu culturel authentique pour une immersion complète",
+    "start_now": "Commencer maintenant"
+  },
+  "features": {
+    "title": "Comment Linguify vous aide à progresser",
+    "subtitle": "Notre méthode basée sur la science cognitive vous garantit des résultats rapides et durables.",
+    "modules_title": "Les applications de Linguify",
+    "modules_description": "Découvrez tous les outils que Linguify propose pour rendre votre apprentissage des langues efficace et agréable.",
+    "platform_title": "Avantages de la plateforme",
+    "platform_description": "Au-delà des méthodes d'apprentissage traditionnelles, Linguify offre des avantages uniques pour accélérer votre progression.",
+    "heading": "Découvrez nos fonctionnalités",
+    "subheading": "Explorez tous les outils et ressources disponibles pour vous aider à maîtriser de nouvelles langues facilement et efficacement.",
+    "explore_all_apps": "Explorer toutes les applications",
+    "click_to_explore": "Cliquez sur une application pour explorer ses fonctionnalités",
+    "cta": {
+      "title": "Prêt à transformer votre apprentissage des langues ?",
+      "description": "Rejoignez des milliers d'apprenants qui ont déjà transformé leur approche de l'apprentissage des langues.",
+      "button": "Démarrer votre parcours",
+      "pricing_button": "Voir les tarifs"
+    },
+    "learn_more": "En savoir plus sur nos apps ?"
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur Linguify.",
+    "questions": {
+      "time": {
+        "question": "Combien de temps faut-il pour apprendre une nouvelle langue ?",
+        "answer": "Les résultats varient selon votre implication et vos objectifs. Nos utilisateurs constatent généralement une amélioration significative après seulement 3 mois d'utilisation quotidienne (10-15 minutes par jour)."
+      },
+      "levels": {
+        "question": "Quels niveaux sont disponibles sur Linguify ?",
+        "answer": "Nos cours couvrent tous les niveaux, du débutant (A1) au niveau avancé (C2) selon le Cadre européen commun de référence pour les langues (CECRL)."
+      },
+      "devices": {
+        "question": "Puis-je accéder à Linguify sur plusieurs appareils ?",
+        "answer": "Oui, votre abonnement vous permet d'accéder à Linguify sur tous vos appareils. Votre progression est synchronisée automatiquement."
+      },
+      "teachers": {
+        "question": "Y a-t-il des professeurs réels derrière Linguify ?",
+        "answer": "Absolument. Notre plateforme combine la technologie IA avec l'expertise de professeurs de langues certifiés qui créent et supervisent le contenu pédagogique."
+      }
+    }
+  },
+  "cta": {
+    "title": "Prêt à transformer votre façon d'apprendre les langues ?",
+    "subtitle": "Rejoignez nous et commencez votre voyage linguistique dès aujourd'hui.",
+    "start_button": "Commencer gratuitement",
+    "plans_button": "Découvrir nos applications"
+  },
+  "company": {
+    "hero": {
+      "title": "Propulser l'apprentissage mondial",
+      "description": "Next-Corporation présente fièrement Linguify - notre engagement à briser les barrières linguistiques et à favoriser la compréhension internationale grâce à une technologie éducative innovante."
+    },
+    "mission": {
+      "title": "Notre Mission",
+      "description": "Révolutionner l'éducation linguistique en développant des outils accessibles et efficaces qui améliorent les expériences d'apprentissage et d'enseignement dans le monde entier. Nous croyons au pouvoir de l'éducation pour transformer des vies et créer un changement global positif."
+    },
+    "values": {
+      "title": "Nos Valeurs",
+      "global": {
+        "title": "Impact Mondial",
+        "description": "Briser les barrières linguistiques pour favoriser la compréhension et la coopération internationales."
+      },
+      "education": {
+        "title": "Excellence Éducative",
+        "description": "Développer des outils innovants qui transforment la façon dont les gens apprennent et enseignent les langues."
+      },
+      "community": {
+        "title": "La Communauté d'Abord",
+        "description": "Construire une communauté mondiale solidaire d'apprenants et d'éducateurs."
+      },
+      "social": {
+        "title": "Responsabilité Sociale",
+        "description": "Promouvoir l'accessibilité de l'éducation et la croissance professionnelle dans le monde entier."
+      }
+    },
+    "story": {
+      "title": "Notre Histoire",
+      "paragraph1": "Fondée en 2023 par Louis-Philippe Lalou et Lionel Hubaut, Linguify est née d'une vision commune de transformer l'éducation mondiale. En tant que partie de Next-Corporation, nous avons identifié le besoin croissant de solutions d'apprentissage des langues innovantes qui pourraient combler les lacunes culturelles et créer des opportunités pour les personnes du monde entier.",
+      "paragraph2": "Notre objectif va au-delà de l'apprentissage des langues - nous construisons des outils qui favorisent la cohésion internationale, améliorent les opportunités d'emploi et contribuent à une société mondiale plus connectée. Grâce à notre plateforme, nous rendons l'éducation linguistique de qualité accessible à tous, partout."
+    },
+    "founder": {
+      "section_title": "Notre Fondateur",
+      "name": "Louis-Philippe Lalou",
+      "role": "Fondateur & PDG",
+      "bio": "Entrepreneur visionnaire passionné par l'utilisation de la technologie pour transformer l'éducation mondiale."
+    }
+  },
+  "flashcardsPage": {
+    "hero": {
+      "title": "Cartes mentales intelligentes",
+      "description": "Mémorisez du vocabulaire en un temps record grâce à notre système adaptatif basé sur la répétition espacée. Apprenez plus rapidement, retenez plus longtemps.",
+      "cta_button": "Essayer gratuitement",
+      "learn_more": "En savoir plus"
+    },
+    "demo": {
+      "front_word": "Le chat",
+      "back_word": "The cat",
+      "tap_to_flip": "Cliquez pour retourner",
+      "back_prompt": "Avez-vous eu juste ?"
+    },
+    "features": {
+      "title": "Caractéristiques principales",
+      "subtitle": "Découvrez pourquoi notre système de flashcards révolutionne l'apprentissage des langues",
+      "spaced_repetition": {
+        "title": "Répétition espacée",
+        "description": "Notre algorithme intelligent adapte vos sessions de révision pour une mémorisation optimale basée sur votre performance."
+      },
+      "extensive_library": {
+        "title": "Bibliothèque extensive",
+        "description": "Des milliers de cartes prêtes à l'emploi dans plus de 20 langues, couvrant le vocabulaire essentiel et les expressions courantes."
+      },
+      "progress_tracking": {
+        "title": "Suivi de progression",
+        "description": "Visualisez votre évolution et identifiez vos points forts et vos faiblesses pour un apprentissage ciblé."
+      },
+      "mobile_sync": {
+        "title": "Synchronisation mobile",
+        "description": "Accédez à vos cartes mentales partout, même hors ligne. Synchronisation automatique entre tous vos appareils."
+      },
+      "multimedia": {
+        "title": "Contenus multimédias",
+        "description": "Enrichissez vos cartes avec images, audio et exemples contextuels pour un apprentissage multi-sensoriel."
+      },
+      "customization": {
+        "title": "Personnalisation avancée",
+        "description": "Créez vos propres ensembles de cartes, organisez-les par thèmes et partagez-les avec la communauté."
+      }
+    },
+    "how_it_works": {
+      "title": "Comment ça marche",
+      "subtitle": "Notre approche scientifique de la mémorisation en 4 étapes simples",
+      "step1": {
+        "title": "Choisissez",
+        "description": "Sélectionnez un ensemble préfait ou créez vos propres cartes mémoires personnalisées."
+      },
+      "step2": {
+        "title": "Pratiquez",
+        "description": "Révisez les cartes et évaluez honnêtement votre niveau de connaissance."
+      },
+      "step3": {
+        "title": "Analysez",
+        "description": "Notre algorithme identifie vos points faibles et ajuste votre programme."
+      },
+      "step4": {
+        "title": "Maîtrisez",
+        "description": "Consolidez vos connaissances avec des révisions optimisées au moment idéal."
+      }
+    },
+    "testimonials": {
+      "title": "Ce que nos utilisateurs disent",
+      "testimonial1": "\"J'ai essayé de nombreuses applications de flashcards, mais celle-ci est de loin la meilleure. En seulement 15 minutes par jour, j'ai considérablement amélioré mon vocabulaire en espagnol.\"",
+      "testimonial2": "\"L'algorithme de répétition espacée est vraiment efficace. Je mémorise beaucoup plus facilement et je retiens le vocabulaire bien plus longtemps qu'avec les méthodes traditionnelles.\"",
+      "testimonial3": "\"La possibilité de créer mes propres cartes avec des images et du son a complètement transformé mon apprentissage. Je progresse beaucoup plus rapidement que je ne l'aurais imaginé.\""
+    },
+    "cta": {
+      "title": "Prêt à accélérer votre apprentissage ?",
+      "description": "Rejoignez des milliers d'apprenants qui ont transformé leur façon de mémoriser du vocabulaire grâce à nos flashcards intelligentes.",
+      "button": "Commencer gratuitement"
+    }
+  },
+  "notebookPage": {
+    "hero": {
+      "title": "Notebook Linguistique",
+      "description": "Capturez, organisez et révisez vos apprentissages linguistiques dans un espace central intelligent. Transformez vos notes en connaissances structurées.",
+      "cta_button": "Essayer gratuitement",
+      "learn_more": "En savoir plus"
+    },
+    "demo": {
+      "folders": "Dossiers",
+      "folder1": "Apprentissage des langues",
+      "folder2": "Vocabulaire",
+      "folder3": "Expressions idiomatiques",
+      "note1": {
+        "title": "Conjugaison - Verbes irréguliers espagnols",
+        "content": "Lista de verbos irregulares más comunes:\n• Ser/Estar (être)\n• Ir (aller)\n• Tener (avoir)\n• Hacer (faire)\n\nNotas: Les verbes irréguliers suivent souvent des schémas qu'on peut regrouper..."
+      },
+      "note2": {
+        "title": "Vocabulaire - Voyage en Italie",
+        "content": "• Buongiorno = Bonjour\n• Arrivederci = Au revoir\n• Per favore = S'il vous plaît\n• Grazie = Merci\n• Quanto costa? = Combien ça coûte?\n• Dov'è...? = Où est...?"
+      },
+      "note3": {
+        "title": "Structure grammaticale allemande",
+        "content": "Règle: En allemand, le verbe conjugué occupe toujours la deuxième position dans une phrase déclarative.\n\nExemples:\n- Ich gehe nach Hause. (Je rentre à la maison)\n- Heute gehe ich nach Hause. (Aujourd'hui je rentre à la maison)"
+      }
+    },
+    "features": {
+      "title": "Fonctionnalités principales",
+      "subtitle": "Découvrez comment notre système de prise de notes transforme votre apprentissage des langues",
+      "smart_search": {
+        "title": "Recherche intelligente",
+        "description": "Retrouvez n'importe quelle note instantanément grâce à notre puissant moteur de recherche qui comprend le contexte linguistique."
+      },
+      "organization": {
+        "title": "Organisation intuitive",
+        "description": "Classez vos notes par langue, niveau, thème ou créez vos propres catégories avec notre système flexible de tags et dossiers."
+      },
+      "rich_formatting": {
+        "title": "Formatage enrichi",
+        "description": "Mettez en forme vos notes avec du texte riche, des tableaux, des listes et intégrez facilement des images, audio et vidéos."
+      },
+      "sync": {
+        "title": "Synchronisation complète",
+        "description": "Accédez à vos notes sur tous vos appareils, même hors ligne, avec une synchronisation transparente et sécurisée."
+      },
+      "language_tools": {
+        "title": "Outils linguistiques",
+        "description": "Profitez de fonctionnalités spécifiques aux langues : dictionnaires intégrés, conjugaison, prononciation et traduction à la volée."
+      },
+      "sharing": {
+        "title": "Partage collaboratif",
+        "description": "Partagez facilement vos notes avec d'autres apprenants ou collaborez en temps réel sur des documents d'étude communs."
+      }
+    },
+    "how_it_works": {
+      "title": "Comment ça marche",
+      "subtitle": "Notre approche de prise de notes structurée en 4 étapes simples",
+      "step1": {
+        "title": "Capturez",
+        "description": "Prenez des notes rapidement dans n'importe quelle langue avec notre éditeur intuitif et nos modèles prédéfinis."
+      },
+      "step2": {
+        "title": "Organisez",
+        "description": "Classez automatiquement vos notes avec notre système intelligent de tags, dossiers et catégories linguistiques."
+      },
+      "step3": {
+        "title": "Connectez",
+        "description": "Liez vos notes à d'autres ressources d'apprentissage et créez un réseau de connaissances interconnectées."
+      },
+      "step4": {
+        "title": "Révisez",
+        "description": "Transformez facilement vos notes en outils de révision grâce à l'intégration avec les flashcards et les exercices."
+      }
+    },
+    "use_cases": {
+      "title": "Idéal pour",
+      "case1": {
+        "title": "Étudiants en langues",
+        "description": "Organisez les règles grammaticales, le vocabulaire et les expressions idiomatiques dans un système cohérent qui facilite la révision et la mémorisation."
+      },
+      "case2": {
+        "title": "Voyageurs",
+        "description": "Créez des guides de conversation personnalisés, des listes de vocabulaire thématiques et des notes culturelles essentielles pour vos déplacements à l'étranger."
+      },
+      "case3": {
+        "title": "Professionnels internationaux",
+        "description": "Développez un lexique professionnel multilingue et prenez des notes de réunions ou d'appels internationaux avec traduction intégrée."
+      }
+    },
+    "cta": {
+      "title": "Prêt à organiser votre apprentissage des langues ?",
+      "description": "Rejoignez des milliers d'utilisateurs qui ont transformé leur prise de notes linguistiques grâce à notre application Notebook.",
+      "button": "Commencer gratuitement"
+    }
+  },
+  "progressPage": {
+    "hero": {
+      "title": "Suivez votre progression",
+      "description": "Visualisez vos progrès linguistiques, définissez des objectifs atteignables et restez motivé tout au long de votre parcours d'apprentissage.",
+      "cta_button": "Essayer gratuitement",
+      "learn_more": "En savoir plus"
+    },
+    "demo": {
+      "summary_title": "Résumé d'activité",
+      "weekly": "Hebdo",
+      "monthly": "Mensuel",
+      "weekdays": {
+        "monday": "Lun",
+        "tuesday": "Mar",
+        "wednesday": "Mer",
+        "thursday": "Jeu",
+        "friday": "Ven",
+        "saturday": "Sam",
+        "sunday": "Dim"
+      },
+      "stats": {
+        "minutes": "minutes",
+        "words": "mots appris",
+        "days": "jours consécutifs"
+      },
+      "achievements_title": "Réussites récentes",
+      "achievements": {
+        "first_lesson": "Première leçon",
+        "week_streak": "Séquence de 7 jours",
+        "vocabulary_master": "Maître du vocabulaire",
+        "grammar_guru": "Gourou de la grammaire"
+      }
+    },
+    "features": {
+      "title": "Fonctionnalités principales",
+      "subtitle": "Découvrez comment notre système de suivi de progression transforme votre expérience d'apprentissage",
+      "stats": {
+        "title": "Statistiques détaillées",
+        "description": "Suivez votre temps d'étude, votre maîtrise du vocabulaire, vos compétences en grammaire et bien plus encore avec des métriques avancées."
+      },
+      "goals": {
+        "title": "Objectifs personnalisés",
+        "description": "Définissez des objectifs quotidiens, hebdomadaires ou mensuels adaptés à votre rythme et vos ambitions linguistiques."
+      },
+      "trends": {
+        "title": "Analyse des tendances",
+        "description": "Identifiez vos points forts et vos faiblesses grâce à des visualisations claires de vos performances au fil du temps."
+      },
+      "achievements": {
+        "title": "Réussites et badges",
+        "description": "Maintenez votre motivation avec un système de récompenses qui célèbre chaque étape de votre progression."
+      },
+      "sharing": {
+        "title": "Partage social",
+        "description": "Partagez vos réussites avec vos amis ou rejoignez des défis communautaires pour une motivation supplémentaire."
+      },
+      "insights": {
+        "title": "Insights personnalisés",
+        "description": "Recevez des recommandations adaptées à votre profil d'apprentissage pour optimiser votre progression."
+      }
+    },
+    "how_it_works": {
+      "title": "Comment ça marche",
+      "subtitle": "Notre approche scientifique du suivi de progression en 4 étapes simples",
+      "step1": {
+        "title": "Définir",
+        "description": "Établissez des objectifs linguistiques clairs et atteignables en fonction de votre niveau et de votre disponibilité."
+      },
+      "step2": {
+        "title": "Mesurer",
+        "description": "Suivez automatiquement vos activités d'apprentissage et vos performances à travers toutes les fonctionnalités de Linguify."
+      },
+      "step3": {
+        "title": "Analyser",
+        "description": "Visualisez vos progrès et identifiez vos forces et faiblesses grâce à des graphiques et analyses détaillés."
+      },
+      "step4": {
+        "title": "Optimiser",
+        "description": "Recevez des recommandations personnalisées pour ajuster votre apprentissage et maximiser votre progression."
+      }
+    },
+    "benefits": {
+      "title": "Les bénéfices du suivi de progression",
+      "benefit1": {
+        "title": "Motivation constante",
+        "description": "Visualiser vos progressions vous aide à rester motivé même lorsque l'apprentissage devient difficile. Nos graphiques et récompenses vous rappellent constamment le chemin déjà parcouru."
+      },
+      "benefit2": {
+        "title": "Apprentissage ciblé",
+        "description": "Ne perdez plus de temps sur des compétences déjà maîtrisées. Notre système identifie précisément les domaines qui nécessitent plus d'attention pour un apprentissage efficace."
+      },
+      "benefit3": {
+        "title": "Responsabilisation",
+        "description": "Les objectifs et le suivi quotidien vous aident à développer une routine d'apprentissage durable. Transformez votre apprentissage linguistique en une habitude positive à long terme."
+      }
+    },
+    "cta": {
+      "title": "Prêt à transformer vos objectifs en réalisations ?",
+      "description": "Rejoignez des milliers d'apprenants qui ont atteint leurs objectifs linguistiques grâce à notre système de suivi de progression.",
+      "button": "Commencer gratuitement"
+    }
+  },
+  "pricingPage": {
+    "header": {
+      "subtitle": "Formules tarifaires",
+      "title": "Choisissez votre parcours d'apprentissage",
+      "description": "Commencez gratuitement et passez à la version premium quand vous serez prêt à débloquer toutes les fonctionnalités"
+    },
+    "billing": {
+      "monthly": "Mensuel",
+      "annually": "Annuel",
+      "discount": "Économisez 17%"
+    },
+    "period": {
+      "monthly": "mois",
+      "yearly": "an"
+    },
+    "popular_badge": "Le plus populaire",
+    "monthly_equivalent": "12,50€/mois facturé annuellement",
+    "cta": {
+      "free": "Commencer gratuitement",
+      "premium": "Obtenir l'accès Premium"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratuit",
+        "description": "Parfait pour débuter l'apprentissage des langues",
+        "features": {
+          "basic_modules": "Accès aux modules d'apprentissage de base",
+          "core_vocabulary": "Exercices de vocabulaire essentiels",
+          "basic_tracking": "Suivi de progression basique",
+          "limited_exercises": "Exercices pratiques limités",
+          "community": "Accès au forum communautaire",
+          "tutoring": "Sessions de tutorat en direct",
+          "analytics": "Analyses avancées",
+          "offline": "Accès hors-ligne"
+        },
+        "tooltips": {
+          "basic_modules": "Apprenez les fondamentaux dans la langue de votre choix",
+          "core_vocabulary": "Pratiquez les mots et phrases essentiels",
+          "basic_tracking": "Suivez votre parcours d'apprentissage",
+          "limited_exercises": "Accès aux exercices de niveau débutant",
+          "community": "Connectez-vous avec d'autres apprenants",
+          "tutoring": "Sessions individuelles avec des locuteurs natifs",
+          "analytics": "Analyses détaillées de votre apprentissage",
+          "offline": "Apprenez sans connexion internet"
+        }
+      },
+      "premium": {
+        "name": "Premium",
+        "description": "Accès complet à toutes les fonctionnalités de Linguify",
+        "features": {
+          "all_free": "Toutes les fonctionnalités gratuites",
+          "unlimited": "Cours de langues illimités",
+          "tutoring": "Sessions de tutorat en direct",
+          "analytics": "Analyses de progression avancées",
+          "personalized": "Parcours d'apprentissage personnalisé",
+          "offline": "Mode hors-ligne",
+          "support": "Support prioritaire",
+          "certificate": "Certificat d'achèvement"
+        },
+        "tooltips": {
+          "all_free": "Tout ce qui est inclus dans le plan Gratuit",
+          "unlimited": "Apprenez plusieurs langues simultanément",
+          "tutoring": "Sessions hebdomadaires avec des locuteurs natifs",
+          "analytics": "Analyses détaillées et recommandations",
+          "personalized": "Programme personnalisé propulsé par l'IA",
+          "offline": "Apprenez n'importe où, n'importe quand",
+          "support": "Assistance dédiée 24h/24 et 7j/7",
+          "certificate": "Certification officielle pour les cours terminés"
+        }
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "need_more": "Besoin de plus d'informations ?",
+      "visit_faq": "Consultez notre FAQ",
+      "or": "ou",
+      "contact": "contactez notre équipe"
+    }
+  }
+}

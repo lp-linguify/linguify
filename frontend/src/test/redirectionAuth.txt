@@ -1,0 +1,60 @@
+function testAuthRedirect() {
+  console.log('🚪 TESTING AUTH REDIRECT');
+  console.log('-----------------------');
+  
+  // Backup current URL
+  const currentUrl = window.location.href;
+  console.log('1. Current URL:', currentUrl);
+  
+  // Temporarily remove auth data
+  const authData = localStorage.getItem('auth_state');
+  localStorage.removeItem('auth_state');
+  document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  console.log('2. Temporarily removed auth data');
+  
+  // Try to access a protected API
+  console.log('3. Attempting to access protected API...');
+  
+  // Add cancel flag to localStorage to abort if needed
+  localStorage.setItem('redirect_test_running', 'true');
+  
+  // Test with a slight delay to allow for cancel
+  console.log('4. You have 3 seconds to cancel (run localStorage.removeItem("redirect_test_running"))');
+  
+  setTimeout(() => {
+    if (localStorage.getItem('redirect_test_running') === 'true') {
+      console.log('5. Test proceeding...');
+      
+      fetch('/api/auth/me')
+      .then(res => {
+        console.log('6. Response status:', res.status);
+        return res.text();
+      })
+      .then(() => {
+        // If we get here without redirect
+        console.log('7. No redirect occurred');
+        
+        // Restore auth data
+        if (authData) localStorage.setItem('auth_state', authData);
+        console.log('8. Restored auth data');
+        localStorage.removeItem('redirect_test_running');
+        console.log('❓ TEST INCONCLUSIVE - expected redirect did not occur');
+      })
+      .catch(() => {
+        // Restore auth data
+        if (authData) localStorage.setItem('auth_state', authData);
+        localStorage.removeItem('redirect_test_running');
+      });
+    } else {
+      console.log('5. Test cancelled');
+      // Restore auth data
+      if (authData) localStorage.setItem('auth_state', authData);
+      console.log('6. Restored auth data');
+    }
+  }, 3000);
+  
+  console.log('NOTE: If the page redirects to login, the test passed!');
+}
+
+// Start test
+testAuthRedirect();

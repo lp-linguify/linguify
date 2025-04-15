@@ -1,0 +1,342 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .exercise-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .language-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .language-tab {
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    margin-right: 2px;
+    font-weight: bold;
+  }
+  
+  .language-tab.active {
+    background-color: white;
+    border-bottom: 1px solid white;
+    position: relative;
+    bottom: -1px;
+  }
+  
+  .language-content {
+    padding: 20px;
+    background-color: white;
+    display: none;
+  }
+  
+  .language-content.active {
+    display: block;
+  }
+  
+  .exercise-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .exercise-sentence {
+    font-size: 20px;
+    margin: 20px 0;
+    line-height: 1.5;
+  }
+  
+  .blank {
+    display: inline-block;
+    border-bottom: 2px dashed #2196F3;
+    padding: 0 5px;
+    min-width: 80px;
+    text-align: center;
+  }
+  
+  .options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .option {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .option:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .option.selected {
+    background-color: #2196F3;
+    color: white;
+    border-color: #2196F3;
+  }
+  
+  .option.correct {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+  }
+  
+  .option.incorrect {
+    background-color: #F44336;
+    color: white;
+    border-color: #F44336;
+  }
+  
+  .feedback {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    display: none;
+  }
+  
+  .feedback.correct {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border: 1px solid #A5D6A7;
+  }
+  
+  .feedback.incorrect {
+    background-color: #FFEBEE;
+    color: #C62828;
+    border: 1px solid #EF9A9A;
+  }
+  
+  .hint {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #E3F2FD;
+    border: 1px solid #BBDEFB;
+    border-radius: 4px;
+    color: #1565C0;
+    display: none;
+  }
+  
+  .hint-button {
+    margin-top: 15px;
+    background-color: transparent;
+    border: 1px solid #2196F3;
+    color: #2196F3;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .hint-button:hover {
+    background-color: #E3F2FD;
+  }
+  
+  .explanation {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #FFF3E0;
+    border: 1px solid #FFE0B2;
+    border-radius: 4px;
+    color: #E65100;
+  }
+  
+  .controls {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Home</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_label|capfirst }}</a>
+  &rsaquo; <a href="{% url 'admin:course_fillblankexercise_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; Preview Exercise #{{ exercise.id }}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>Exercise Preview: {{ exercise.content_lesson.title_en }}</h1>
+  
+  <div class="module">
+    <div class="exercise-container">
+      {% if languages %}
+        <div class="language-tabs">
+          {% for lang in languages %}
+            <div class="language-tab {% if forloop.first %}active{% endif %}" data-lang="{{ lang }}">
+              {{ lang|upper }}
+            </div>
+          {% endfor %}
+        </div>
+        
+        {% for lang in languages %}
+          <div class="language-content {% if forloop.first %}active{% endif %}" data-lang="{{ lang }}">
+            <div class="exercise-title">
+              {{ exercise.instructions|get_item:lang }}
+            </div>
+            
+            <div class="exercise-sentence">
+              {% with sentence=exercise.sentences|get_item:lang %}
+                {% if '___' in sentence %}
+                  {% with parts=sentence|split:'___' %}
+                    {{ parts.0 }}<span class="blank">_____</span>{{ parts.1 }}
+                  {% endwith %}
+                {% else %}
+                  {{ sentence }}
+                {% endif %}
+              {% endwith %}
+            </div>
+            
+            <div class="options-container">
+              {% with options=exercise.answer_options|get_item:lang %}
+                {% for option in options %}
+                  <div class="option" data-value="{{ option }}" data-correct="{{ option|eq:exercise.correct_answers|get_item:lang }}">
+                    {{ option }}
+                  </div>
+                {% endfor %}
+              {% endwith %}
+            </div>
+            
+            <button class="hint-button">Show Hint</button>
+            
+            <div class="hint">
+              {% if exercise.hints %}
+                {{ exercise.hints|get_item:lang|default:"No hint available." }}
+              {% else %}
+                No hint available.
+              {% endif %}
+            </div>
+            
+            <div class="feedback correct">
+              <strong>Correct!</strong> Well done.
+              {% if exercise.explanations %}
+                <div class="explanation">
+                  {{ exercise.explanations|get_item:lang|default:"" }}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="feedback incorrect">
+              <strong>Incorrect.</strong> Try again.
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="module aligned">
+          <p>No language content available for this exercise.</p>
+        </div>
+      {% endif %}
+      
+      <div class="controls">
+        <a href="{% url 'admin:course_fillblankexercise_change' exercise.id %}" class="button">Edit Exercise</a>
+        <a href="{% url 'admin:course_fillblankexercise_changelist' %}" class="button">Back to List</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Language tabs
+  document.querySelectorAll('.language-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const lang = this.dataset.lang;
+      
+      // Update tab styling
+      document.querySelectorAll('.language-tab').forEach(t => {
+        t.classList.remove('active');
+      });
+      this.classList.add('active');
+      
+      // Show selected content
+      document.querySelectorAll('.language-content').forEach(content => {
+        content.classList.remove('active');
+        if (content.dataset.lang === lang) {
+          content.classList.add('active');
+        }
+      });
+    });
+  });
+  
+  // Options handling
+  document.querySelectorAll('.option').forEach(option => {
+    option.addEventListener('click', function() {
+      const container = this.closest('.language-content');
+      const blank = container.querySelector('.blank');
+      const isCorrect = this.dataset.correct === 'True';
+      
+      // Already answered?
+      if (container.querySelector('.option.selected')) {
+        return;
+      }
+      
+      // Update blank with selected option
+      blank.textContent = this.textContent;
+      blank.style.borderBottom = 'none';
+      
+      // Update options
+      container.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+        
+        if (opt === this) {
+          opt.classList.add('selected');
+          opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+        } else if (opt.dataset.correct === 'True' && !isCorrect) {
+          // Show correct answer if user was wrong
+          opt.classList.add('correct');
+        }
+      });
+      
+      // Show feedback
+      container.querySelectorAll('.feedback').forEach(fb => {
+        fb.style.display = 'none';
+      });
+      
+      const feedback = container.querySelector(isCorrect ? '.feedback.correct' : '.feedback.incorrect');
+      if (feedback) {
+        feedback.style.display = 'block';
+      }
+    });
+  });
+  
+  // Hint buttons
+  document.querySelectorAll('.hint-button').forEach(button => {
+    button.addEventListener('click', function() {
+      const container = this.closest('.language-content');
+      const hint = container.querySelector('.hint');
+      
+      if (hint.style.display === 'block') {
+        hint.style.display = 'none';
+        this.textContent = 'Show Hint';
+      } else {
+        hint.style.display = 'block';
+        this.textContent = 'Hide Hint';
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

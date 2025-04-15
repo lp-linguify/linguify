@@ -1,0 +1,79 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Home</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_label|capfirst }}</a>
+  &rsaquo; <a href="{% url 'admin:course_fillblankexercise_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; Bulk Create
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div class="module aligned">
+    <h1>Bulk Create Fill in the Blank Exercises</h1>
+    
+    <div class="description">
+      <p>Create multiple exercises at once by entering data in a simple format.
+         Each exercise should be separated by a blank line.</p>
+    </div>
+    
+    <form method="post">
+      {% csrf_token %}
+      
+      <fieldset class="module aligned">
+        <div class="form-row field-content_lesson">
+          <div>
+            <label for="id_content_lesson" class="required">Content Lesson:</label>
+            <select name="content_lesson" id="id_content_lesson" required>
+              <option value="">---------</option>
+              {% for content_lesson in content_lessons %}
+                <option value="{{ content_lesson.id }}">
+                  [{{ content_lesson.lesson.unit.level }}] {{ content_lesson.lesson.unit.title_en }} - 
+                  {{ content_lesson.lesson.title_en }} - {{ content_lesson.title_en }}
+                </option>
+              {% endfor %}
+            </select>
+            <div class="help">The content lesson these exercises belong to</div>
+          </div>
+        </div>
+        
+        <div class="form-row field-bulk_data">
+          <div>
+            <label for="id_bulk_data" class="required">Exercise Data:</label>
+            <textarea name="bulk_data" id="id_bulk_data" rows="15" cols="80" required 
+                     style="font-family: monospace;" placeholder="Enter exercise data here..."></textarea>
+            <div class="help">
+              <p>Enter one exercise per paragraph (separated by blank lines).</p>
+              <p>Format for each exercise:</p>
+              <pre style="background-color: #f5f5f5; padding: 5px; margin: 5px 0;">
+Sentence with ___ for blank
+option1,option2,option3,option4
+correct_answer
+hint (optional)
+explanation (optional)
+                </pre>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      
+      <div class="submit-row">
+        <input type="submit" value="Create Exercises" class="default">
+      </div>
+    </form>
+    
+    <div class="module">
+      <h2>Example</h2>
+      <pre style="background-color: #f5f5f5; padding: 10px; border: 1px solid #ddd; overflow-x: auto; max-height: 300px;">{{ sample_data }}</pre>
+      
+      <div class="help">
+        <p><strong>Note:</strong> This simplified format only supports creating English exercises. 
+           For multilingual exercises, use the CSV import feature.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

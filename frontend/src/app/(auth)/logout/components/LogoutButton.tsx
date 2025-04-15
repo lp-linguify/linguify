@@ -1,40 +1,41 @@
-// Code: frontend/src/app/(auth)/logout/components/LogoutButton.tsx
-'use client';
+// src/app/(auth)/logout/components/LogoutButton.tsx
+"use client";
 
-import { useState } from 'react';
-import axios from 'axios';
+import { Button } from "@/components/ui/button";
+// Supprimez l'import inutilisé
+// import { useAuthContext } from "@/services/AuthProvider";
 
-const LogoutButton = () => {
-  const [isLoading, setIsLoading] = useState(false);
+export function LogoutButton() {
+  // Supprimez la déclaration inutilisée
+  // const { isAuthenticated } = useAuthContext();
 
   const handleLogout = async () => {
     try {
-      setIsLoading(true);
-      // Appeler l'endpoint de déconnexion du backend
-      const response = await axios.post('http://localhost:8000/api/v1/auth/logout');
+      console.log("Déconnexion en cours...");
       
-      // Rediriger vers l'URL de déconnexion Auth0
-      if (response.data.logoutUrl) {
-        window.location.href = response.data.logoutUrl;
-      }
+      // Nettoyage local
+      localStorage.clear();
+      
+      // Effacer les cookies
+      document.cookie.split(";").forEach(function(c) {
+        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+      
+      // Redirection directe vers home
+      window.location.href = '/home';
     } catch (error) {
-      console.error('Logout error:', error);
-    } finally {
-      setIsLoading(false);
+      console.error("Erreur lors de la déconnexion:", error);
+      window.location.href = '/home';
     }
   };
 
   return (
-    <button
-      onClick={handleLogout}
-      disabled={isLoading}
-      className="flex items-center w-full px-3 py-2 text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+    <Button 
+      onClick={handleLogout} 
+      variant="outline"
+      className="text-red-500 hover:text-red-700 hover:bg-red-50"
     >
-      <span className="ml-2">
-        {isLoading ? 'Logging out...' : 'Log out'}
-      </span>
-    </button>
+      Déconnexion
+    </Button>
   );
-};
-
-export default LogoutButton;
+}

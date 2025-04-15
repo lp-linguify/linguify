@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <!-- Styles & Definitions -->
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="progressGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6A5ACD" />
+      <stop offset="100%" stop-color="#FF8C00" />
+    </linearGradient>
+    
+    <!-- Simple shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.2" />
+    </filter>
+  </defs>
+
+  <style>
+    .title {
+      font-family: 'Arial', sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      fill: #333;
+    }
+    .unit-title {
+      font-family: 'Arial', sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      fill: #333;
+    }
+    .unit-desc {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      fill: #666;
+    }
+    .level-badge {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      fill: white;
+    }
+    .completion {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      fill: #666;
+      text-anchor: end;
+    }
+    .progress-bg {
+      fill: #E6E6E6;
+      rx: 6;
+      ry: 6;
+    }
+    .progress-fill {
+      rx: 6;
+      ry: 6;
+    }
+    .connector {
+      stroke: #CCCCCC;
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+    .connector-filled {
+      stroke: #6A5ACD;
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+    .arrow {
+      fill: #6A5ACD;
+    }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#FAFAFA" />
+  
+  <!-- Page Title with underline -->
+  <text x="400" y="40" class="title" text-anchor="middle">Parcours d'apprentissage</text>
+  <line x1="250" y1="50" x2="550" y2="50" stroke="#6A5ACD" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Learning Path Container -->
+  <g transform="translate(50, 80)">
+    <!-- Vertical line connectors -->
+    <line x1="30" y1="20" x2="30" y2="380" class="connector" />
+    
+    <!-- Active path -->
+    <line x1="30" y1="20" x2="30" y2="120" class="connector-filled" />
+    <line x1="30" y1="120" x2="30" y2="220" class="connector-filled" />
+    <line x1="30" y1="220" x2="30" y2="320" class="connector-filled" />
+
+    <!-- Unit 1 - Current Active -->
+    <g transform="translate(0, 0)">
+      <circle cx="30" cy="20" r="15" fill="url(#progressGradient1)" filter="url(#shadow)" />
+      <text x="30" y="25" text-anchor="middle" fill="white" font-weight="bold">1</text>
+      
+      <rect x="60" y="0" width="600" height="80" rx="10" ry="10" fill="white" filter="url(#shadow)" />
+      
+      <rect x="70" y="10" width="100" height="20" rx="10" ry="10" fill="url(#progressGradient1)" />
+      <text x="120" y="24" text-anchor="middle" class="level-badge">Level A1</text>
+      
+      <text x="70" y="45" class="unit-title">Unit 1</text>
+      <text x="70" y="65" class="unit-desc">First steps: Greetings, numbers 1-20, alphabet, and basic introductions.</text>
+      
+      <text x="650" y="24" class="completion">51% complete</text>
+      
+      <!-- Progress bar -->
+      <rect x="70" y="75" width="580" height="6" class="progress-bg" />
+      <rect x="70" y="75" width="295" height="6" class="progress-fill" fill="url(#progressGradient1)" />
+      
+      <!-- Arrow -->
+      <polygon points="670,40 680,40 675,50" class="arrow" />
+      
+      <!-- Current indicator -->
+      <circle cx="30" cy="20" r="20" fill="none" stroke="#6A5ACD" stroke-width="2" opacity="0.6" />
+    </g>
+
+    <!-- Unit 2 -->
+    <g transform="translate(0, 100)">
+      <circle cx="30" cy="20" r="15" fill="url(#progressGradient1)" filter="url(#shadow)" />
+      <text x="30" y="25" text-anchor="middle" fill="white" font-weight="bold">2</text>
+      
+      <rect x="60" y="0" width="600" height="80" rx="10" ry="10" fill="white" filter="url(#shadow)" />
+      
+      <rect x="70" y="10" width="100" height="20" rx="10" ry="10" fill="url(#progressGradient1)" />
+      <text x="120" y="24" text-anchor="middle" class="level-badge">Level A1</text>
+      
+      <text x="70" y="45" class="unit-title">Unit 2</text>
+      <text x="70" y="65" class="unit-desc">Personal information: Talking about yourself, family members, basic adjectives.</text>
+      
+      <text x="650" y="24" class="completion">48% complete</text>
+      
+      <!-- Progress bar -->
+      <rect x="70" y="75" width="580" height="6" class="progress-bg" />
+      <rect x="70" y="75" width="278" height="6" class="progress-fill" fill="url(#progressGradient1)" />
+      
+      <!-- Arrow -->
+      <polygon points="670,40 680,40 675,50" class="arrow" />
+    </g>
+
+    <!-- Unit 3 -->
+    <g transform="translate(0, 200)">
+      <circle cx="30" cy="20" r="15" fill="url(#progressGradient1)" filter="url(#shadow)" />
+      <text x="30" y="25" text-anchor="middle" fill="white" font-weight="bold">3</text>
+      
+      <rect x="60" y="0" width="600" height="80" rx="10" ry="10" fill="white" filter="url(#shadow)" />
+      
+      <rect x="70" y="10" width="100" height="20" rx="10" ry="10" fill="url(#progressGradient1)" />
+      <text x="120" y="24" text-anchor="middle" class="level-badge">Level A1</text>
+      
+      <text x="70" y="45" class="unit-title">Unit 3</text>
+      <text x="70" y="65" class="unit-desc">Daily routines: Basic verbs, telling time, days of the week, daily activities.</text>
+      
+      <text x="650" y="24" class="completion">8% complete</text>
+      
+      <!-- Progress bar -->
+      <rect x="70" y="75" width="580" height="6" class="progress-bg" />
+      <rect x="70" y="75" width="46" height="6" class="progress-fill" fill="url(#progressGradient1)" />
+      
+      <!-- Arrow -->
+      <polygon points="670,40 680,40 675,50" class="arrow" />
+    </g>
+
+    <!-- Unit 4 -->
+    <g transform="translate(0, 300)">
+      <circle cx="30" cy="20" r="15" fill="url(#progressGradient1)" filter="url(#shadow)" />
+      <text x="30" y="25" text-anchor="middle" fill="white" font-weight="bold">4</text>
+      
+      <rect x="60" y="0" width="600" height="80" rx="10" ry="10" fill="white" filter="url(#shadow)" />
+      
+      <rect x="70" y="10" width="100" height="20" rx="10" ry="10" fill="url(#progressGradient1)" />
+      <text x="120" y="24" text-anchor="middle" class="level-badge">Level A1</text>
+      
+      <text x="70" y="45" class="unit-title">Unit 4</text>
+      <text x="70" y="65" class="unit-desc">Home and environment: House vocabulary, basic prepositions, describing your home.</text>
+      
+      <text x="650" y="24" class="completion">78% complete</text>
+      
+      <!-- Progress bar -->
+      <rect x="70" y="75" width="580" height="6" class="progress-bg" />
+      <rect x="70" y="75" width="452" height="6" class="progress-fill" fill="url(#progressGradient1)" />
+      
+      <!-- Arrow -->
+      <polygon points="670,40 680,40 675,50" class="arrow" />
+    </g>
+
+    <!-- Legend -->
+    <g transform="translate(500, 400)">
+      <rect x="0" y="0" width="150" height="60" rx="5" ry="5" fill="white" stroke="#CCCCCC" stroke-width="1" />
+      <circle cx="15" cy="15" r="8" fill="#6A5ACD" />
+      <text x="30" y="19" class="unit-desc">Current Unit</text>
+      <rect x="10" y="35" width="40" height="6" rx="3" ry="3" fill="url(#progressGradient1)" />
+      <text x="60" y="40" class="unit-desc">Progress</text>
+    </g>
+  </g>
+</svg>

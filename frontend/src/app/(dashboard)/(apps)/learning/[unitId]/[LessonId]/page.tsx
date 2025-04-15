@@ -1,5 +1,6 @@
+// src/app/(dashboard)/(apps)/learning/[unitId]/[lessonId]/page.tsx
 import { Suspense } from 'react';
-import LessonContent from '../../_components/LessonContent';
+import LessonContent from '../../../../../../addons/learning/components/LessonContent/LessonContent';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -7,7 +8,7 @@ interface PageProps {
 }
 
 export default async function LessonPage({ params }: PageProps) {
-  const resolvedParams = await params; // On attend la résolution de la promesse
+  const resolvedParams = await params; // Wait for params to resolve
   const { unitId, lessonId } = resolvedParams;
 
   if (!unitId || !lessonId || isNaN(Number(unitId)) || isNaN(Number(lessonId))) {
@@ -22,7 +23,7 @@ export default async function LessonPage({ params }: PageProps) {
         </div>
       }
     >
-      <LessonContent lessonId={lessonId} />
+      <LessonContent lessonId={lessonId} unitId={unitId} />
     </Suspense>
   );
 }

@@ -1,4 +1,4 @@
-import QueryProvider from '@/providers/QueryProvider';
+import QueryProvider from '@/core/providers/QueryProvider';
 
 export default function NotebookLayout({
   children,

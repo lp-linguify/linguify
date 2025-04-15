@@ -1,0 +1,570 @@
+{
+  "header": "Functies",
+  "pricing": {
+    "title": "Plannen aangepast aan jouw behoeften",
+    "subtitle": "Kies het aanbod dat past bij jouw doelen en leertempo.",
+    "most_popular": "Meest populair",
+    "free": {
+      "name": "Gratis",
+      "price": "€0",
+      "period": "voor altijd",
+      "description": "Perfect om te beginnen en de applicatie te testen",
+      "feature1": "1 taal naar keuze",
+      "feature2": "Toegang tot basisles",
+      "feature3": "5 minuten chat per dag",
+      "feature4": "Beperkte herhalingen",
+      "cta": "Gratis beginnen"
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "€9,99",
+      "period": "per maand",
+      "description": "Onze meest populaire formule om vooruitgang te boeken",
+      "feature1": "Alle talen toegankelijk",
+      "feature2": "Geavanceerde en gespecialiseerde lessen",
+      "feature3": "Onbeperkte chat met AI",
+      "feature4": "Compleet herzieningssysteem",
+      "feature5": "Wekelijkse coaching",
+      "cta": "7 dagen gratis proberen"
+    },
+    "enterprise": {
+      "name": "Zakelijk",
+      "price": "Op maat",
+      "period": "",
+      "description": "Complete oplossing voor teams",
+      "feature1": "Aangepaste trainingen",
+      "feature2": "Bedrijfsdashboard",
+      "feature3": "Teamvoortgang bijhouden",
+      "feature4": "LMS-integratie",
+      "feature5": "Dedicated ondersteuning",
+      "cta": "Contact verkoop"
+    }
+  },
+  "testimonials": {
+    "louis": {
+      "role": "Customer Service Manager",
+      "text": "Ik heb altijd moeite gehad met het leren van een nieuwe taal, maar Linguify heeft het proces zoveel gemakkelijker en leuker gemaakt."
+    },
+    "victor": {
+      "role": "Project Director",
+      "text": "Ik had veel moeite om een ​​leermethode te vinden die voor mij werkte, maar Linguify voldeed echt aan mijn verwachtingen."
+    },
+    "camille": {
+      "role": "Reisblogger",
+      "text": "Ik ben onder de indruk van de kwaliteit van de lessen en de verscheidenheid aan oefeningen die worden aangeboden. Linguify is echt een uitgebreide applicatie."
+    },
+    "languages": "Beschikbare talen",
+    "units": "Cursuseenheden",
+    "lessons": "Interactieve lessen",
+    "words": "Woorden en zinnen om te leren",
+    "title": "Wat onze gebruikers zeggen",
+    "subtitle": "Ontdek hoe Linguify het leren van talen heeft getransformeerd voor duizenden gebruikers."
+  },
+  "stats": {
+    "countries": "Vertegenwoordigde landen",
+    "languages": "Beschikbare talen",
+    "units": "Leereenheden per taal",
+    "lessons": "Interactieve lessen",
+    "words": "Woorden, zinnen en uitdrukkingen"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Applicaties",
+    "pricing": "Prijzen",
+    "company": "Bedrijf",
+    "contact": "Contact"
+  },
+  "auth": {
+    "signIn": "Inloggen",
+    "signInProgress": "Inloggen...",
+    "logOut": "Uitloggen",
+    "logOutProgress": "Uitloggen...",
+    "tryFree": "Gratis proberen",
+    "register": "Registreren"
+  },
+  "mobile": {
+    "language": "Taal"
+  },
+  "learning": {
+    "title": "Leren",
+    "description": "Interactieve leermodules aangepast aan jouw tempo"
+  },
+  "flashcards": {
+    "title": "Geheugen",
+    "description": "Effectieve geheugentools voor snelle retentie"
+  },
+  "notebook": {
+    "title": "Notities",
+    "description": "Gecentraliseerde aantekeningen met slimme organisatie"
+  },
+  "progress": {
+    "title": "Voortgang",
+    "description": "Gedetailleerde tracking van je evolutie en prestaties"
+  },
+  "community": {
+    "title": "Gemeenschap",
+    "description": "Wissel uit en leer met andere gebruikers"
+  },
+  "chat": {
+    "title": "Chat",
+    "description": "Communiceer in realtime met je netwerk"
+  },
+  "coaching": {
+    "title": "Coaching met tutors",
+    "description": "Gepersonaliseerde begeleiding met domeinexperts"
+  },
+  "hero": {
+    "title": "Leer een nieuwe taal op je eigen tempo!",
+    "subtitle": "Alles wat je nodig hebt om een ​​nieuwe taal te leren, waar je ook bent.",
+    "start_button": "Gratis beginnen",
+    "discover_button": "Ontdek onze applicaties",
+    "screenshot_alt": "Linguify app interface",
+    "image_placeholder": "(Afbeelding niet beschikbaar)"
+  },
+  "languages": {
+    "title": "Verken onze talencatalogus",
+    "subtitle": "Kies uit meer dan 25 talen en begin vandaag nog met leren.",
+    "choose": "Welke taal wil je leren?",
+    "learn_minutes": "Leer {language} in 10 minuten per dag",
+    "description": "Onze korte en effectieve lessen passen zich aan aan je drukke schema. Maak consistent vooruitgang zonder uren te besteden.",
+    "benefit1": "Meer dan 5000 woorden en zinnen met moedertaaluitspraak",
+    "benefit2": "AI-conversatieoefeningen voor onbeperkte praktijk",
+    "benefit3": "Authentieke culturele inhoud voor volledige onderdompeling",
+    "start_now": "Nu beginnen"
+  },
+  "features": {
+    "title": "Hoe Linguify je helpt vooruit te komen",
+    "subtitle": "Onze methode op basis van cognitieve wetenschap garandeert snelle en blijvende resultaten.",
+    "modules_title": "Kern leermodules",
+    "modules_description": "Ontdek alle tools die Linguify biedt om je taalreis effectief en plezierig te maken.",
+    "platform_title": "Platformvoordelen",
+    "platform_description": "Naast traditionele leermethoden biedt Linguify unieke voordelen om je vooruitgang te versnellen.",
+    "heading": "Ontdek onze functies",
+    "subheading": "Verken alle tools en middelen die beschikbaar zijn om je te helpen nieuwe talen gemakkelijk en effectief te beheersen.",
+    "explore_all_apps": "Alle applicaties verkennen",
+    "click_to_explore": "Klik op een applicatie om de functies te verkennen",
+    "cta": {
+      "title": "Klaar om je taalleerproces te transformeren?",
+      "description": "Sluit je aan bij duizenden leerlingen die hun benadering van talen leren al hebben getransformeerd.",
+      "button": "Begin je reis",
+      "pricing_button": "Prijzen bekijken"
+    },
+    "learn_more": "Meer weten over onze apps ?"
+  },
+  "faq": {
+    "title": "Veelgestelde vragen",
+    "subtitle": "Alles wat je moet weten over Linguify.",
+    "questions": {
+      "time": {
+        "question": "Hoelang duurt het om een nieuwe taal te leren?",
+        "answer": "Resultaten variëren afhankelijk van je inzet en doelen. Onze gebruikers merken doorgaans een significante verbetering na slechts 3 maanden dagelijks gebruik (10-15 minuten per dag)."
+      },
+      "levels": {
+        "question": "Welke niveaus zijn beschikbaar op Linguify?",
+        "answer": "Onze cursussen dekken alle niveaus, van beginner (A1) tot gevorderd (C2) volgens het Gemeenschappelijk Europees Referentiekader voor Talen (ERK)."
+      },
+      "devices": {
+        "question": "Kan ik Linguify op meerdere apparaten gebruiken?",
+        "answer": "Ja, je abonnement geeft je toegang tot Linguify op al je apparaten. Je voortgang wordt automatisch gesynchroniseerd."
+      },
+      "teachers": {
+        "question": "Zijn er echte docenten achter Linguify?",
+        "answer": "Absoluut. Ons platform combineert AI-technologie met de expertise van gecertificeerde taaldocenten die de educatieve content creëren en beheren."
+      }
+    }
+  },
+  "cta": {
+    "title": "Klaar om de manier waarop je talen leert te transformeren?",
+    "subtitle": "Sluit je aan bij meer dan 5 miljoen leerlingen en begin vandaag nog aan je taalreis.",
+    "start_button": "Gratis beginnen",
+    "plans_button": "Ontdek onze plannen"
+  },
+  "company": {
+    "hero": {
+      "title": "Wereldwijd Leren Versterken",
+      "description": "Next-Corporation presenteert met trots Linguify - onze toewijding aan het doorbreken van taalbarrières en het bevorderen van internationaal begrip door middel van innovatieve onderwijstechnologie."
+    },
+    "mission": {
+      "title": "Onze Missie",
+      "description": "Om taalonderwijs te revolutioneren door toegankelijke, effectieve hulpmiddelen te ontwikkelen die de leer- en onderwijservaringen wereldwijd verbeteren. Wij geloven in de kracht van onderwijs om levens te transformeren en positieve wereldwijde verandering te creëren."
+    },
+    "values": {
+      "title": "Onze Waarden",
+      "global": {
+        "title": "Wereldwijde Impact",
+        "description": "Het doorbreken van taalbarrières om internationaal begrip en samenwerking te bevorderen."
+      },
+      "education": {
+        "title": "Educatieve Uitmuntendheid",
+        "description": "Het ontwikkelen van innovatieve hulpmiddelen die veranderen hoe mensen talen leren en onderwijzen."
+      },
+      "community": {
+        "title": "Gemeenschap Voorop",
+        "description": "Het bouwen van een ondersteunende wereldwijde gemeenschap van leerlingen en docenten."
+      },
+      "social": {
+        "title": "Sociale Verantwoordelijkheid",
+        "description": "Het bevorderen van toegankelijkheid tot onderwijs en professionele groei wereldwijd."
+      }
+    },
+    "story": {
+      "title": "Ons Verhaal",
+      "paragraph1": "Opgericht in 2023 door Louis-Philippe Lalou en Lionel Hubaut, ontstond Linguify uit een gedeelde visie om wereldwijd onderwijs te transformeren. Als onderdeel van Next-Corporation identificeerden we de groeiende behoefte aan innovatieve taalleermiddelen die culturele kloven konden overbruggen en kansen konden creëren voor mensen wereldwijd.",
+      "paragraph2": "Onze focus gaat verder dan alleen taal leren - we bouwen hulpmiddelen die internationale cohesie bevorderen, werkgelegenheidskansen verbeteren en bijdragen aan een meer verbonden wereldwijde samenleving. Via ons platform maken we kwalitatief taalonderwijs toegankelijk voor iedereen, overal."
+    },
+    "founder": {
+      "section_title": "Onze Oprichter",
+      "name": "Louis-Philippe Lalou",
+      "role": "Oprichter & CEO",
+      "bio": "Visionair ondernemer met een passie voor het gebruik van technologie om wereldwijd onderwijs te transformeren."
+    }
+  },
+  "flashcardsPage": {
+    "hero": {
+      "title": "Slimme Flashcards",
+      "description": "Memoriseer vocabulaire in recordtijd dankzij ons adaptief systeem gebaseerd op gespreide herhaling. Leer sneller, onthoud langer.",
+      "cta_button": "Gratis proberen",
+      "learn_more": "Meer informatie"
+    },
+    "demo": {
+      "front_word": "Le chat",
+      "back_word": "De kat",
+      "tap_to_flip": "Klik om te draaien",
+      "back_prompt": "Had je het goed?"
+    },
+    "features": {
+      "title": "Belangrijkste kenmerken",
+      "subtitle": "Ontdek waarom ons flashcard-systeem het taalleren revolutioneert",
+      "spaced_repetition": {
+        "title": "Gespreide herhaling",
+        "description": "Ons intelligente algoritme past je studiesessies aan voor optimale memorisatie op basis van je prestaties."
+      },
+      "extensive_library": {
+        "title": "Uitgebreide bibliotheek",
+        "description": "Duizenden kant-en-klare kaarten in meer dan 20 talen, met essentiële woordenschat en veelgebruikte uitdrukkingen."
+      },
+      "progress_tracking": {
+        "title": "Voortgangsbewaking",
+        "description": "Visualiseer je evolutie en identificeer je sterke en zwakke punten voor gericht leren."
+      },
+      "mobile_sync": {
+        "title": "Mobiele synchronisatie",
+        "description": "Toegang tot je flashcards overal, zelfs offline. Automatische synchronisatie tussen al je apparaten."
+      },
+      "multimedia": {
+        "title": "Multimedia-inhoud",
+        "description": "Verrijk je kaarten met afbeeldingen, audio en contextuele voorbeelden voor multisensorisch leren."
+      },
+      "customization": {
+        "title": "Geavanceerde aanpassing",
+        "description": "Maak je eigen kaartensets, organiseer ze per thema en deel ze met de gemeenschap."
+      }
+    },
+    "how_it_works": {
+      "title": "Hoe het werkt",
+      "subtitle": "Onze wetenschappelijke benadering van memorisatie in 4 eenvoudige stappen",
+      "step1": {
+        "title": "Kies",
+        "description": "Selecteer een kant-en-klare set of maak je eigen aangepaste flashcards."
+      },
+      "step2": {
+        "title": "Oefen",
+        "description": "Bekijk de kaarten en beoordeel eerlijk je kennisniveau."
+      },
+      "step3": {
+        "title": "Analyseer",
+        "description": "Ons algoritme identificeert je zwakke punten en past je programma aan."
+      },
+      "step4": {
+        "title": "Beheers",
+        "description": "Consolideer je kennis met geoptimaliseerde herhalingen op het ideale moment."
+      }
+    },
+    "testimonials": {
+      "title": "Wat onze gebruikers zeggen",
+      "testimonial1": "\"Ik heb veel flashcard-apps geprobeerd, maar deze is veruit de beste. In slechts 15 minuten per dag heb ik mijn Spaanse woordenschat aanzienlijk verbeterd.\"",
+      "testimonial2": "\"Het algoritme voor gespreide herhaling is echt effectief. Ik memoriseer veel gemakkelijker en onthoud woordenschat veel langer dan met traditionele methoden.\"",
+      "testimonial3": "\"De mogelijkheid om mijn eigen kaarten te maken met afbeeldingen en geluid heeft mijn leerproces volledig getransformeerd. Ik boek veel sneller vooruitgang dan ik me had kunnen voorstellen.\""
+    },
+    "cta": {
+      "title": "Klaar om je leerproces te versnellen?",
+      "description": "Sluit je aan bij duizenden leerlingen die hun manier van woordenschat memoriseren hebben getransformeerd dankzij onze slimme flashcards.",
+      "button": "Gratis beginnen"
+    }
+  },
+  "notebookPage": {
+    "hero": {
+      "title": "Taalnotitieblok",
+      "description": "Leg vast, organiseer en herhaal je taalleerproces in één intelligente centrale ruimte. Transformeer je notities in gestructureerde kennis.",
+      "cta_button": "Gratis proberen",
+      "learn_more": "Meer informatie"
+    },
+    "demo": {
+      "folders": "Mappen",
+      "folder1": "Taalleren",
+      "folder2": "Woordenschat",
+      "folder3": "Idiomatische uitdrukkingen",
+      "note1": {
+        "title": "Vervoeging - Spaanse onregelmatige werkwoorden",
+        "content": "Lista de verbos irregulares más comunes:\n• Ser/Estar (zijn)\n• Ir (gaan)\n• Tener (hebben)\n• Hacer (doen/maken)\n\nOpmerkingen: Onregelmatige werkwoorden volgen vaak patronen die gegroepeerd kunnen worden..."
+      },
+      "note2": {
+        "title": "Woordenschat - Reizen in Italië",
+        "content": "• Buongiorno = Goedemorgen/hallo\n• Arrivederci = Tot ziens\n• Per favore = Alstublieft\n• Grazie = Dank u\n• Quanto costa? = Hoeveel kost het?\n• Dov'è...? = Waar is...?"
+      },
+      "note3": {
+        "title": "Duitse grammaticale structuur",
+        "content": "Regel: In het Duits staat het vervoegde werkwoord altijd op de tweede positie in een mededelende zin.\n\nVoorbeelden:\n- Ich gehe nach Hause. (Ik ga naar huis)\n- Heute gehe ich nach Hause. (Vandaag ga ik naar huis)"
+      }
+    },
+    "features": {
+      "title": "Belangrijkste functies",
+      "subtitle": "Ontdek hoe ons notitiessysteem je taalleervermogen transformeert",
+      "smart_search": {
+        "title": "Slim zoeken",
+        "description": "Vind elke notitie direct met onze krachtige zoekmachine die de taalcontext begrijpt."
+      },
+      "organization": {
+        "title": "Intuïtieve organisatie",
+        "description": "Classificeer je notities per taal, niveau, thema of maak je eigen categorieën met ons flexibele systeem van tags en mappen."
+      },
+      "rich_formatting": {
+        "title": "Rijke opmaak",
+        "description": "Maak je notities op met rijke tekst, tabellen, lijsten en integreer gemakkelijk afbeeldingen, audio en video's."
+      },
+      "sync": {
+        "title": "Volledige synchronisatie",
+        "description": "Toegang tot je notities op al je apparaten, zelfs offline, met naadloze en veilige synchronisatie."
+      },
+      "language_tools": {
+        "title": "Taaltools",
+        "description": "Geniet van taalspecifieke functies: ingebouwde woordenboeken, vervoeging, uitspraak en directe vertaling."
+      },
+      "sharing": {
+        "title": "Samenwerkend delen",
+        "description": "Deel eenvoudig je notities met andere leerlingen of werk in realtime samen aan gemeenschappelijke studiedocumenten."
+      }
+    },
+    "how_it_works": {
+      "title": "Hoe het werkt",
+      "subtitle": "Onze gestructureerde notitie-aanpak in 4 eenvoudige stappen",
+      "step1": {
+        "title": "Vastleggen",
+        "description": "Maak snel notities in elke taal met onze intuïtieve editor en voorgedefinieerde sjablonen."
+      },
+      "step2": {
+        "title": "Organiseren",
+        "description": "Classificeer je notities automatisch met ons intelligente systeem van tags, mappen en taalcategorieën."
+      },
+      "step3": {
+        "title": "Verbinden",
+        "description": "Koppel je notities aan andere leermiddelen en creëer een netwerk van onderling verbonden kennis."
+      },
+      "step4": {
+        "title": "Herhalen",
+        "description": "Transformeer je notities eenvoudig in herhalingstools dankzij de integratie met flashcards en oefeningen."
+      }
+    },
+    "use_cases": {
+      "title": "Ideaal voor",
+      "case1": {
+        "title": "Taalstudenten",
+        "description": "Organiseer grammaticaregels, woordenschat en idiomatische uitdrukkingen in een coherent systeem dat revisie en memorisatie vergemakkelijkt."
+      },
+      "case2": {
+        "title": "Reizigers",
+        "description": "Maak aangepaste conversatiegidsen, thematische woordenlijsten en essentiële culturele notities voor je reizen naar het buitenland."
+      },
+      "case3": {
+        "title": "Internationale professionals",
+        "description": "Ontwikkel een meertalig professioneel lexicon en maak notities tijdens internationale vergaderingen of gesprekken met geïntegreerde vertaling."
+      }
+    },
+    "cta": {
+      "title": "Klaar om je taalleervermogen te organiseren?",
+      "description": "Sluit je aan bij duizenden gebruikers die hun taalaantekeningen hebben getransformeerd dankzij onze Notebook-applicatie.",
+      "button": "Gratis beginnen"
+    }
+  },
+  "progressPage": {
+    "hero": {
+      "title": "Volg je voortgang",
+      "description": "Visualiseer je taalvorderingen, stel haalbare doelen en blijf gemotiveerd tijdens je leertraject.",
+      "cta_button": "Gratis proberen",
+      "learn_more": "Meer informatie"
+    },
+    "demo": {
+      "summary_title": "Activiteitssamenvatting",
+      "weekly": "Wekelijks",
+      "monthly": "Maandelijks",
+      "weekdays": {
+        "monday": "Ma",
+        "tuesday": "Di",
+        "wednesday": "Wo",
+        "thursday": "Do",
+        "friday": "Vr",
+        "saturday": "Za",
+        "sunday": "Zo"
+      },
+      "stats": {
+        "minutes": "minuten",
+        "words": "geleerde woorden",
+        "days": "dagen op rij"
+      },
+      "achievements_title": "Recente prestaties",
+      "achievements": {
+        "first_lesson": "Eerste les",
+        "week_streak": "7-dagen reeks",
+        "vocabulary_master": "Woordenschat meester",
+        "grammar_guru": "Grammatica goeroe"
+      }
+    },
+    "features": {
+      "title": "Belangrijkste functies",
+      "subtitle": "Ontdek hoe ons voortgangssysteem je leerervaring transformeert",
+      "stats": {
+        "title": "Gedetailleerde statistieken",
+        "description": "Volg je studietijd, woordenschatbeheersing, grammaticavaardigheden en veel meer met geavanceerde metrieken."
+      },
+      "goals": {
+        "title": "Aangepaste doelen",
+        "description": "Stel dagelijkse, wekelijkse of maandelijkse doelen in die zijn afgestemd op je tempo en taalambities."
+      },
+      "trends": {
+        "title": "Trendanalyse",
+        "description": "Identificeer je sterke en zwakke punten door middel van duidelijke visualisaties van je prestaties in de loop van de tijd."
+      },
+      "achievements": {
+        "title": "Prestaties & badges",
+        "description": "Blijf gemotiveerd met een beloningssysteem dat elke mijlpaal in je voortgang viert."
+      },
+      "sharing": {
+        "title": "Sociaal delen",
+        "description": "Deel je prestaties met vrienden of doe mee aan gemeenschapsuitdagingen voor extra motivatie."
+      },
+      "insights": {
+        "title": "Gepersonaliseerde inzichten",
+        "description": "Ontvang aanbevelingen op maat van je leerprofiel om je voortgang te optimaliseren."
+      }
+    },
+    "how_it_works": {
+      "title": "Hoe het werkt",
+      "subtitle": "Onze wetenschappelijke benadering van voortgangsregistratie in 4 eenvoudige stappen",
+      "step1": {
+        "title": "Definiëren",
+        "description": "Stel duidelijke, haalbare taaldoelen op basis van je niveau en beschikbaarheid."
+      },
+      "step2": {
+        "title": "Meten",
+        "description": "Volg automatisch je leeractiviteiten en prestaties in alle Linguify-functies."
+      },
+      "step3": {
+        "title": "Analyseren",
+        "description": "Visualiseer je voortgang en identificeer je sterke en zwakke punten via gedetailleerde grafieken en analyses."
+      },
+      "step4": {
+        "title": "Optimaliseren",
+        "description": "Ontvang gepersonaliseerde aanbevelingen om je leerproces aan te passen en je voortgang te maximaliseren."
+      }
+    },
+    "benefits": {
+      "title": "Voordelen van voortgangsregistratie",
+      "benefit1": {
+        "title": "Consistente motivatie",
+        "description": "Het visualiseren van je voortgang helpt je gemotiveerd te blijven, zelfs wanneer het leren uitdagend wordt. Onze grafieken en beloningen herinneren je voortdurend aan hoe ver je al bent gekomen."
+      },
+      "benefit2": {
+        "title": "Gericht leren",
+        "description": "Stop met het verspillen van tijd aan vaardigheden die je al beheerst. Ons systeem identificeert precies welke gebieden meer aandacht nodig hebben voor efficiënt leren."
+      },
+      "benefit3": {
+        "title": "Verantwoordelijkheid",
+        "description": "Doelen en dagelijkse tracking helpen je een duurzame leerroutine te ontwikkelen. Transformeer je taalleringsproces in een positieve langetermijngewoonte."
+      }
+    },
+    "cta": {
+      "title": "Klaar om je doelen in prestaties om te zetten?",
+      "description": "Sluit je aan bij duizenden leerlingen die hun taaldoelen hebben bereikt met ons voortgangsregistratiesysteem.",
+      "button": "Gratis beginnen"
+    }
+  },
+  "pricingPage": {
+    "header": {
+      "subtitle": "Prijsplannen",
+      "title": "Kies je leertraject",
+      "description": "Begin gratis en upgrade wanneer je klaar bent om alle functies te ontgrendelen"
+    },
+    "billing": {
+      "monthly": "Maandelijks",
+      "annually": "Jaarlijks",
+      "discount": "Bespaar 17%"
+    },
+    "period": {
+      "monthly": "maand",
+      "yearly": "jaar"
+    },
+    "popular_badge": "Meest populair",
+    "monthly_equivalent": "€12,50/maand jaarlijks gefactureerd",
+    "cta": {
+      "free": "Gratis beginnen",
+      "premium": "Premium toegang krijgen"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratis",
+        "description": "Perfect om te starten met het leren van talen",
+        "features": {
+          "basic_modules": "Toegang tot basis leermodules",
+          "core_vocabulary": "Essentiële woordenschatoefeningen",
+          "basic_tracking": "Basis voortgangsregistratie",
+          "limited_exercises": "Beperkte praktijkoefeningen",
+          "community": "Toegang tot community forum",
+          "tutoring": "Live tutorsessies",
+          "analytics": "Geavanceerde analyses",
+          "offline": "Offline toegang"
+        },
+        "tooltips": {
+          "basic_modules": "Leer de basisprincipes in de taal van je keuze",
+          "core_vocabulary": "Oefen essentiële woorden en zinnen",
+          "basic_tracking": "Volg je leertraject",
+          "limited_exercises": "Toegang tot oefeningen op beginnersniveau",
+          "community": "Maak verbinding met andere leerlingen",
+          "tutoring": "Individuele sessies met moedertaalsprekers",
+          "analytics": "Gedetailleerde inzichten in je leerproces",
+          "offline": "Leer zonder internetverbinding"
+        }
+      },
+      "premium": {
+        "name": "Premium",
+        "description": "Volledige toegang tot alle Linguify functies",
+        "features": {
+          "all_free": "Alle gratis functies",
+          "unlimited": "Onbeperkte taalcursussen",
+          "tutoring": "Live tutorsessies",
+          "analytics": "Geavanceerde voortgangsanalyses",
+          "personalized": "Gepersonaliseerd leerpad",
+          "offline": "Offline modus",
+          "support": "Prioriteitsondersteuning",
+          "certificate": "Certificaat van voltooiing"
+        },
+        "tooltips": {
+          "all_free": "Alles in het Gratis plan",
+          "unlimited": "Leer meerdere talen tegelijk",
+          "tutoring": "Wekelijkse sessies met moedertaalsprekers",
+          "analytics": "Gedetailleerde inzichten en aanbevelingen",
+          "personalized": "AI-gestuurd aangepast curriculum",
+          "offline": "Leer overal, altijd",
+          "support": "24/7 toegewijde ondersteuning",
+          "certificate": "Officiële certificering voor voltooide cursussen"
+        }
+      }
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "need_more": "Meer informatie nodig?",
+      "visit_faq": "Bezoek onze FAQ",
+      "or": "of",
+      "contact": "neem contact op met ons team"
+    }
+  }
+}

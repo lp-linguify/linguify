@@ -1,360 +1,156 @@
 // src/app/(dashboard)/_components/header.tsx
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/providers/AuthProvider";
-import { Button } from "@/components/ui/button";
+import React, { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useAuthContext } from "@/core/auth/AuthProvider";
+import { useTranslation } from "@/core/i18n/useTranslations";
+
+// Import refactored components
+import { ModeToggle } from "./ThemeToggle";
+import { LanguageSelector } from "./LanguageSelector";
+import { NotificationButton } from "./NotificationButton";
+import { UserMenu } from "./UserMenu";
+import { AuthButtons } from "./AuthButtons";
+import LogoSection from "@/app/(dashboard)/_components/LogoSection/logo-section";
+import { MobileMenu, MobileMenuToggle } from "./MobileMenu";
+
+// Import icons for page configurations
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  User,
   BookOpen,
-  Trophy,
+  Brain,
+  BarChart,
+  NotebookPen,
+  HandHelping,
   Settings,
-  Bell,
-  LogOut,
-  Menu,
-  ChevronDown,
-  GlobeIcon,
 } from "lucide-react";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
-import { useTheme } from "next-themes";
-import { Sun, Moon } from "lucide-react";
 
-const Header: React.FC = () => {
-  const { isAuthenticated, user, logout } = useAuth();
-  const [, setForceUpdate] = useState(0);
-  const forceUpdate = () => setForceUpdate(prev => prev + 1);
+// Define types for page configuration
+interface PageConfig {
+  title: string;
+  icon: React.ElementType | null;
+}
+
+interface PagesConfig {
+  [path: string]: PageConfig;
+}
+
+const Header = () => {
   const router = useRouter();
-  const { toast } = useToast();
-  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const { user, isAuthenticated, login } = useAuthContext();
+  const { t } = useTranslation();
+  
+  // State
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  console.log("Header rendered");
-  console.log("isAuthenticated:", isAuthenticated);
-  console.log("user:", user);
-  console.log("localStorage auth_state:", localStorage.getItem('auth_state'));
-  console.log("effectivelyAuthenticated:", isAuthenticated || !!user || !!localStorage.getItem('auth_state'));
-
-  const handleLanguageChange = (value: string) => {
-    console.log("Language changed to:", value);
-    toast({
-      title: "Language Changed",
-      description: `Language set to ${value.toUpperCase()}`,
-    });
+  const [isClient, setIsClient] = useState(false);
+  
+  // Define page configuration
+  const PAGE_CONFIG: PagesConfig = {
+    '/': { title: 'Linguify', icon: null },
+    '/home': { title: 'Linguify', icon: null },
+    '/learning': { title: t('dashboard.layoutpathname.learning'), icon: BookOpen },
+    '/flashcard': { title: t('dashboard.layoutpathname.flashcard'), icon: Brain },
+    '/progress': { title: t('dashboard.layoutpathname.progress'), icon: BarChart },
+    '/notebook': { title: t('dashboard.layoutpathname.notebook'), icon: NotebookPen },
+    '/help': { title: t('dashboard.helpCard.title'), icon: HandHelping },
+    '/settings': { title: t('dashboard.layoutpathname.settings'), icon: Settings },
   };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      console.log("Logged out successfully");
-      router.push("/");
-      toast({
-        title: "Logged out successfully",
-        description: "Come back soon!",
-      });
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast({
-        variant: "destructive",
-        title: "Error logging out",
-        description: "Please try again",
-      });
-    }
-  };
-
-  const handleNotificationClick = () => {
-    toast({
-      title: "No new notifications",
-      description: "Check back later for updates",
-    });
-  };
-
-  // Vérifier si l'utilisateur est authentifié pour la mise à jour de l'interface
+  
+  // Get current page config with fallback
+  const currentPage = PAGE_CONFIG[pathname] || { title: 'Linguify', icon: null };
+  const isHomePage = pathname === '/' || pathname === '/home';
+  
+  // Set client-side state as early as possible
   useEffect(() => {
-    // Vérification par Auth0 ou localStorage comme solution de secours
-    console.log("Checking auth state consistency");
-    const authStateFromStorage = localStorage.getItem('auth_state');
-    console.log("localStorage auth_state:", authStateFromStorage);
-    const hasAuthInStorage = !!authStateFromStorage;
-    console.log("hasAuthInStorage:", hasAuthInStorage);
-    
-    // Si user existe mais isAuthenticated est false, ou si auth_state existe dans localStorage
-    if ((user && !isAuthenticated) || (!isAuthenticated && hasAuthInStorage)) {
-      console.log("Auth state inconsistency detected, forcing update");
-      forceUpdate();
-    }
-  }, [user, isAuthenticated]);
+    setIsClient(true);
+  }, []);
 
-  // Gérer la fermeture du menu mobile lors du clic à l'extérieur
+  // Manage mobile menu
   useEffect(() => {
     const handleClickOutside = () => {
       if (isMenuOpen) setIsMenuOpen(false);
     };
-    
+
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMenuOpen]);
-
-  // Déterminer si l'utilisateur est réellement authentifié (fallback si isAuthenticated est incorrect)
-  const effectivelyAuthenticated = isAuthenticated || !!user || !!localStorage.getItem('auth_state');
+  
+  // Navigation functions
+  const handleBackToHome = () => {
+    router.push('/');
+  };
+  
+  const handleLogout = () => {
+    // Handled inside the UserMenu component
+  };
+  
+  // Render a skeleton header with the correct title even before hydration
+  if (!isClient) {
+    return (
+      <header className="sticky top-0 z-50 w-full h-14 bg-background">
+        <div className="flex h-14 items-center px-6">
+          <div className="flex items-center">
+            <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-400 bg-clip-text text-transparent font-montserrat">
+              {currentPage.title}
+            </span>
+          </div>
+        </div>
+      </header>
+    );
+  }
+  
+  // Get the icon component for the current page
+  const CurrentPageIcon = currentPage.icon;
 
   return (
-    <header className="sticky top-0 z-50 w-full h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-gray-900/95">
+    <header className="sticky top-0 z-50 w-full h-14 dark:border-gray-800/20 bg-transparent dark:bg-transparent ">
       <div className="flex h-14 items-center justify-between px-6">
         {/* Logo Section */}
-        <div className="flex items-center gap-2">
-          <Link
-            href="/"
-            className="flex items-center gap-2 hover:opacity-90 transition-all"
-          >
-            <GlobeIcon className="h-6 w-6 text-brand-purple" />
-            <span className="text-xl font-bold bg-gradient-to-r from-brand-purple to-brand-gold bg-clip-text text-transparent">
-              Linguify
-            </span>
-          </Link>
-
-          {/* Navigation */}
-          <nav className="hidden md:flex gap-6 ml-10">
-            <NavItem href="/learning" icon={BookOpen} label="Learn" />
-            <NavItem href="/progress" icon={Trophy} label="Progress" />
-          </nav>
-        </div>
+        <LogoSection 
+          title={currentPage.title} 
+          icon={CurrentPageIcon && <CurrentPageIcon />} 
+          isHomePage={isHomePage} 
+          onNavigateHome={handleBackToHome}
+          className="h-full"
+        />
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
           {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className="text-gray-600 dark:text-gray-300 hover:text-sky-600 dark:hover:text-sky-400"
-          >
-            {theme === 'light' ? (
-              <Moon className="h-5 w-5" />
-            ) : (
-              <Sun className="h-5 w-5" />
-            )}
-          </Button>
+          <ModeToggle />
 
           {/* Language Selector */}
-          <Select onValueChange={handleLanguageChange} defaultValue="en">
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="en">English</SelectItem>
-              <SelectItem value="fr">French</SelectItem>
-              <SelectItem value="es">Spanish</SelectItem>
-              <SelectItem value="nl">Dutch</SelectItem>
-            </SelectContent>
-          </Select>
+          <LanguageSelector />
 
           {/* Auth-dependent UI */}
-          {effectivelyAuthenticated ? (
+          {isAuthenticated && user ? (
             <div className="flex items-center gap-4">
               {/* Notifications */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleNotificationClick}
-                className="relative"
-              >
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full" />
-              </Button>
+              <NotificationButton count={1} />
 
               {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2">
-                    {user?.picture ? (
-                      <img 
-                        src={user.picture} 
-                        alt="Profile" 
-                        className="h-6 w-6 rounded-full object-cover"
-                      />
-                    ) : (
-                      <User className="h-4 w-4" />
-                    )}
-                    <span className="max-w-[100px] truncate">{user?.name || 'Profile'}</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuLabel>
-                    <div className="flex items-center gap-2">
-                      {user?.picture && (
-                        <img 
-                          src={user.picture} 
-                          alt="Profile" 
-                          className="h-8 w-8 rounded-full object-cover"
-                        />
-                      )}
-                      <div>
-                        <p className="font-medium text-sm">{user?.name}</p>
-                        <p className="text-xs text-muted-foreground">{user?.email}</p>
-                      </div>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => router.push('/profile')}>
-                    <User className="h-4 w-4 mr-2" />
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push('/learning')}>
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    My Learning
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push('/settings')}>
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-red-600">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserMenu user={user} />
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <Button 
-                variant="ghost"
-                onClick={() => router.push('/login')}
-              >
-                Sign In
-              </Button>
-              <Button
-                className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white"
-                onClick={() => router.push('/register')}
-              >
-                Get Started 
-              </Button>
-            </div>
+            <AuthButtons onLogin={login} />
           )}
 
-          {/* Mobile Menu Button */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="md:hidden"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMenuOpen(!isMenuOpen);
-            }}
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+          {/* Mobile Menu Toggle */}
+          <MobileMenuToggle isOpen={isMenuOpen} onToggle={setIsMenuOpen} />
         </div>
       </div>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t dark:border-gray-700">
-          <div className="p-4 space-y-3">
-            <NavItemMobile href="/learning" icon={BookOpen} label="Learn" onClick={() => setIsMenuOpen(false)} />
-            <NavItemMobile href="/progress" icon={Trophy} label="Progress" onClick={() => setIsMenuOpen(false)} />
-            
-            {effectivelyAuthenticated ? (
-              <>
-                <NavItemMobile href="/profile" icon={User} label="Profile" onClick={() => setIsMenuOpen(false)} />
-                <NavItemMobile href="/settings" icon={Settings} label="Settings" onClick={() => setIsMenuOpen(false)} />
-                <div className="pt-2">
-                  <Button 
-                    variant="destructive" 
-                    className="w-full justify-start"
-                    onClick={() => {
-                      handleLogout();
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="flex flex-col gap-2 pt-2">
-                <Button 
-                  onClick={() => {
-                    router.push('/login');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Sign In
-                </Button>
-                <Button
-                  className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white"
-                  onClick={() => {
-                    router.push('/register');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Get Started 
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <MobileMenu 
+        isAuthenticated={isAuthenticated}
+        onLogin={login}
+        onLogout={handleLogout}
+        onToggle={setIsMenuOpen}
+        isOpen={isMenuOpen}
+      />
     </header>
   );
 };
-
-const NavItem = ({
-  href,
-  icon: Icon,
-  label,
-}: {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-}) => (
-  <Link
-    href={href}
-    className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
-  >
-    <Icon className="h-4 w-4" />
-    {label}
-  </Link>
-);
-
-const NavItemMobile = ({
-  href,
-  icon: Icon,
-  label,
-  onClick,
-}: {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  onClick?: () => void;
-}) => (
-  <Link
-    href={href}
-    className="flex items-center p-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-    onClick={onClick}
-  >
-    <Icon className="h-4 w-4 mr-3" />
-    {label}
-  </Link>
-);
 
 export default Header;

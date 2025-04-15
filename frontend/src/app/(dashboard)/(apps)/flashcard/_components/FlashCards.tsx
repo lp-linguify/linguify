@@ -1,38 +1,33 @@
+// src/app/(dashboard)/(apps)/flashcard/_components/FlashCards.tsx
+'use client';
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Plus,
   ChevronLeft,
   ChevronRight,
   Check,
   RefreshCw,
-  BookOpen,
-  MoreVertical,
   Trash,
   Pencil,
+  FileSpreadsheet,
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { revisionApi } from "@/services/revisionAPI";
-import type { Flashcard, FlashcardDeck } from "@/types/revision";
-import EditCardModal from "./EditCardModal";
+import { revisionApi } from "@/addons/flashcard/api/revisionAPI";
+import type { Flashcard, FlashcardDeck } from "@/addons/flashcard/types";
+import EditCardModal from "../../../../../addons/flashcard/components/EditCardModal";
+import ImportExcelModal from "../../../../../addons/flashcard/components/ImportExcelModal";
+import { useTranslation } from "@/core/i18n/useTranslations";
 
 // Types
+interface FlashcardAppProps {
+  selectedDeck: FlashcardDeck;
+  onCardUpdate: () => void;
+}
+
 interface ApiError extends Error {
   status?: number;
   data?: any;
@@ -41,132 +36,30 @@ interface ApiError extends Error {
 interface FormData {
   frontText: string;
   backText: string;
-  deckName: string;
 }
 
-// DeckSelection Component
-const DeckSelection = ({
-  decks,
-  selectedDeck,
-  onDeckSelect,
-  onDeleteDeck,
-  isLoading,
-}: {
-  decks: FlashcardDeck[];
-  selectedDeck: number | null;
-  onDeckSelect: (deckId: string) => void;
-  onDeleteDeck: (deckId: number) => void;
-  isLoading: boolean;
-}) => (
-  <div className="flex gap-2 items-center">
-    <Select value={selectedDeck?.toString()} onValueChange={onDeckSelect}>
-      <SelectTrigger className="w-full sm:w-48">
-        <SelectValue placeholder="Choose a deck" />
-      </SelectTrigger>
-      <SelectContent>
-        {decks.map((deck) => (
-          <div key={deck.id} className="flex items-center justify-between pr-2">
-            <SelectItem value={deck.id.toString()}>{deck.name}</SelectItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                  disabled={isLoading}
-                >
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                  className="text-red-600"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDeleteDeck(deck.id);
-                  }}
-                >
-                  <Trash className="mr-2 h-4 w-4" />
-                  Delete Deck
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ))}
-      </SelectContent>
-    </Select>
-  </div>
-);
-
 // Main FlashcardApp Component
-const FlashcardApp = () => {
+const FlashcardApp: React.FC<FlashcardAppProps> = ({ selectedDeck, onCardUpdate }) => {
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // State
-  const [decks, setDecks] = useState<FlashcardDeck[]>([]);
-  const [selectedDeck, setSelectedDeck] = useState<number | null>(null);
   const [cards, setCards] = useState<Flashcard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [filter, setFilter] = useState<"all" | "new" | "review" | "known">(
-    "all"
-  );
+  const [filter, setFilter] = useState<"all" | "new" | "review" | "known">("all");
   const [isAddingCard, setIsAddingCard] = useState(false);
-  const [isAddingDeck, setIsAddingDeck] = useState(false);
   const [editingCard, setEditingCard] = useState<Flashcard | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     frontText: "",
     backText: "",
-    deckName: "",
   });
+  const [isImporting, setIsImporting] = useState(false);
 
   // Handlers
-  const handleDeckSelect = (value: string) => {
-    const deckId = parseInt(value);
-    setSelectedDeck(deckId);
-    fetchCards(deckId);
-  };
-
-  const handleDeleteDeck = async (deckId: number) => {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete this deck? This action cannot be undone."
-      )
-    ) {
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      await revisionApi.decks.delete(deckId);
-
-      setDecks((prev) => prev.filter((deck) => deck.id !== deckId));
-
-      if (selectedDeck === deckId) {
-        setSelectedDeck(null);
-        setCards([]);
-      }
-
-      toast({
-        title: "Success",
-        description: "Deck deleted successfully",
-      });
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to delete deck";
-      toast({
-        title: "Error",
-        description: message,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleDeleteCard = async (cardId: number) => {
-    if (!window.confirm("Are you sure you want to delete this card?")) {
+    if (!window.confirm(t('dashboard.flashcards.confirmDeleteCard'))) {
       return;
     }
 
@@ -176,54 +69,16 @@ const FlashcardApp = () => {
       setCards((prev) => prev.filter((card) => card.id !== cardId));
 
       toast({
-        title: "Success",
-        description: "Card deleted successfully",
+        title: t('dashboard.flashcards.successTitle'),
+        description: t('dashboard.flashcards.deleteSuccess'),
       });
+
+      // Inform parent component about the change
+      onCardUpdate();
     } catch (err) {
       toast({
-        title: "Error",
-        description: "Failed to delete card",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleAddDeck = async () => {
-    if (!formData.deckName.trim()) {
-      toast({
-        title: "Error",
-        description: "Deck name cannot be empty",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const deckData = {
-        name: formData.deckName.trim(),
-        description: `Deck created on ${new Date().toLocaleDateString()}`,
-        is_active: true,
-      };
-
-      const newDeck = await revisionApi.decks.create(deckData);
-      setDecks((prev) => [...prev, newDeck]);
-      setFormData((prev) => ({ ...prev, deckName: "" }));
-      setIsAddingDeck(false);
-
-      toast({
-        title: "Success",
-        description: "Deck created successfully",
-      });
-    } catch (err) {
-      const apiError = err as ApiError;
-      const message =
-        apiError.data?.description?.[0] ||
-        apiError.data?.detail ||
-        "Failed to create deck";
-      toast({
-        title: "Error",
-        description: message,
+        title: t('dashboard.flashcards.errorTitle'),
+        description: t('dashboard.flashcards.deleteError'),
         variant: "destructive",
       });
     } finally {
@@ -235,8 +90,8 @@ const FlashcardApp = () => {
     e.preventDefault();
     if (!selectedDeck) {
       toast({
-        title: "Error",
-        description: "Please select a deck first",
+        title: t('dashboard.flashcards.errorTitle'),
+        description: t('dashboard.flashcards.noDeckSelected'),
         variant: "destructive",
       });
       return;
@@ -244,8 +99,8 @@ const FlashcardApp = () => {
 
     if (!formData.frontText.trim() || !formData.backText.trim()) {
       toast({
-        title: "Error",
-        description: "Front and back text are required",
+        title: t('dashboard.flashcards.errorTitle'),
+        description: t('dashboard.flashcards.textRequired'),
         variant: "destructive",
       });
       return;
@@ -257,33 +112,32 @@ const FlashcardApp = () => {
       const cardData = {
         front_text: formData.frontText.trim(),
         back_text: formData.backText.trim(),
-        deck_id: selectedDeck,
+        deck_id: selectedDeck.id,
       };
-
-      console.log("Sending card data:", cardData); // Debug log
 
       const newCard = await revisionApi.flashcards.create(cardData);
 
-      console.log("Card created:", newCard); // Debug log
-
       setCards((prev) => [...prev, newCard]);
-      setFormData((prev) => ({ ...prev, frontText: "", backText: "" }));
+      setFormData({ frontText: "", backText: "" });
       setIsAddingCard(false);
 
       toast({
-        title: "Success",
-        description: "Card created successfully",
+        title: t('dashboard.flashcards.successTitle'),
+        description: t('dashboard.flashcards.createSuccess'),
       });
+
+      // Inform parent component about the change
+      onCardUpdate();
     } catch (err) {
-      console.error("Error creating card:", err); // Debug log
+      console.error("Error creating card:", err);
       const apiError = err as ApiError;
       const errorMessage =
         apiError.data?.detail ||
         apiError.data?.error ||
-        "Failed to create card";
+        t('dashboard.flashcards.createError');
 
       toast({
-        title: "Error",
+        title: t('dashboard.flashcards.errorTitle'),
         description: errorMessage,
         variant: "destructive",
       });
@@ -301,16 +155,20 @@ const FlashcardApp = () => {
         cardData
       );
 
-      // Mettre à jour la carte dans l'état local
+      // Update the card in local state
       setCards((prev) =>
         prev.map((card) => (card.id === updatedCard.id ? updatedCard : card))
       );
 
       setEditingCard(null);
+
+      // Inform parent component about the change
+      onCardUpdate();
     } catch (err) {
       throw err;
     }
   };
+
   const handleCardStatusUpdate = async (cardId: number, success: boolean) => {
     try {
       await revisionApi.flashcards.toggleLearned(cardId, success);
@@ -320,58 +178,42 @@ const FlashcardApp = () => {
         )
       );
       toast({
-        title: "Success",
+        title: t('dashboard.flashcards.successTitle'),
         description: success
-          ? "Card marked as known"
-          : "Card marked for review",
+          ? t('dashboard.flashcards.markedKnown')
+          : t('dashboard.flashcards.markedReview'),
       });
+
+      // Inform parent component about the change
+      onCardUpdate();
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Failed to update card status";
+        err instanceof Error ? err.message : t('dashboard.flashcards.updateStatusError');
       toast({
-        title: "Error",
+        title: t('dashboard.flashcards.errorTitle'),
         description: message,
         variant: "destructive",
       });
-    }
-  };
-  // Data fetching
-  const fetchDecks = async () => {
-    try {
-      setIsLoading(true);
-      const data = await revisionApi.decks.getAll();
-      setDecks(data);
-      if (data.length > 0) {
-        setSelectedDeck(data[0].id);
-      }
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to load decks";
-      toast({
-        title: "Error",
-        description: message,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const fetchCards = async (deckId: number) => {
-    if (!deckId) return;
+  // Data fetching
+  const fetchCards = async () => {
+    if (!selectedDeck) return;
+
     try {
       setIsLoading(true);
       setCurrentIndex(0);
       setCards([]);
 
-      const data = await revisionApi.flashcards.getAll(deckId);
+      const data = await revisionApi.flashcards.getAll(selectedDeck.id);
       setCards(data);
       setFilter("all");
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Failed to load flashcards";
+        err instanceof Error ? err.message : t('dashboard.flashcards.loadError');
       toast({
-        title: "Error",
+        title: t('dashboard.flashcards.errorTitle'),
         description: message,
         variant: "destructive",
       });
@@ -383,12 +225,8 @@ const FlashcardApp = () => {
 
   // Effects
   useEffect(() => {
-    fetchDecks();
-  }, []);
-
-  useEffect(() => {
     if (selectedDeck) {
-      fetchCards(selectedDeck);
+      fetchCards();
     }
   }, [selectedDeck]);
 
@@ -411,57 +249,34 @@ const FlashcardApp = () => {
   // Render methods
   const renderHeader = () => (
     <div className="bg-white rounded-lg shadow-sm border">
-      <div className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <DeckSelection
-            decks={decks}
-            selectedDeck={selectedDeck}
-            onDeckSelect={handleDeckSelect}
-            onDeleteDeck={handleDeleteDeck}
-            isLoading={isLoading}
-          />
+      <div className="p-6 flex flex-wrap gap-2 justify-end">
+        <Button
+          onClick={() => setIsImporting(true)}
+          className="whitespace-nowrap bg-gradient-to-r from-brand-purple to-brand-gold"
+          disabled={isLoading}
+        >
+          <FileSpreadsheet className="w-4 h-4 mr-2" />
+          {t('dashboard.flashcards.importExcel')}
+        </Button>
 
+        <Button
+          onClick={() => setIsAddingCard(true)}
+          className="whitespace-nowrap bg-gradient-to-r from-brand-purple to-brand-gold"
+          disabled={isLoading}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          {t('dashboard.flashcards.addCard')}
+        </Button>
 
-
-          
-          <div className="flex gap-2">
-            <Button
-              onClick={() => setIsAddingDeck(true)}
-              className="whitespace-nowrap bg-gradient-to-r from-brand-purple to-brand-gold"
-              disabled={isLoading}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              New List
-            </Button>
-
-
-
-
-
-
-
-            {selectedDeck && (
-              <>
-                <Button
-                  onClick={() => setIsAddingCard(true)}
-                  className="whitespace-nowrap bg-gradient-to-r from-brand-purple to-brand-gold"
-                  disabled={isLoading}
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Card
-                </Button>
-                <Button
-                  onClick={() =>
-                    handleDeleteCard(filteredCards[currentIndex].id)
-                  }
-                  className="whitespace-nowrap bg-gradient-to-r from-brand-purple to-brand-gold"
-                >
-                  <Trash className="w-4 h-4 mr-2" /> Delete Card
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
+        {filteredCards.length > 0 && (
+          <Button
+            onClick={() => handleDeleteCard(filteredCards[currentIndex].id)}
+            variant="outline"
+            className="whitespace-nowrap"
+          >
+            <Trash className="w-4 h-4 mr-2" /> {t('dashboard.flashcards.deleteCard')}
+          </Button>
+        )}
       </div>
 
       {/* Statistics Bar */}
@@ -472,15 +287,14 @@ const FlashcardApp = () => {
             onClick={() => setFilter("all")}
             className="w-full justify-center"
           >
-            <BookOpen className="w-4 h-4 mr-2" />
-            All ({stats.total})
+            {t('dashboard.flashcards.filter.all')} ({stats.total})
           </Button>
           <Button
             variant={filter === "new" ? "default" : "outline"}
             onClick={() => setFilter("new")}
             className="w-full justify-center"
           >
-            New ({stats.new})
+            {t('dashboard.flashcards.filter.new')} ({stats.new})
           </Button>
           <Button
             variant={filter === "review" ? "default" : "outline"}
@@ -492,7 +306,7 @@ const FlashcardApp = () => {
             }}
           >
             <RefreshCw className="w-4 h-4 mr-2" />
-            To Review ({stats.review})
+            {t('dashboard.flashcards.filter.toReview')} ({stats.review})
           </Button>
           <Button
             variant={filter === "known" ? "default" : "outline"}
@@ -504,7 +318,7 @@ const FlashcardApp = () => {
             }}
           >
             <Check className="w-4 h-4 mr-2" />
-            Known ({stats.known})
+            {t('dashboard.flashcards.filter.known')} ({stats.known})
           </Button>
         </div>
       </div>
@@ -517,19 +331,15 @@ const FlashcardApp = () => {
         <div className="flex justify-center items-center h-80">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900" />
         </div>
-      ) : selectedDeck === null ? (
-        <div className="text-center text-gray-500 py-12">
-          Please select a deck or create a new one to start
-        </div>
       ) : cards.length === 0 ? (
         <div className="text-center text-gray-500 py-12">
-          <div className="mb-4">No cards in this deck yet</div>
+          <div className="mb-4">{t('dashboard.flashcards.noCards')}</div>
           <Button
             onClick={() => setIsAddingCard(true)}
             className="whitespace-nowrap"
           >
             <Plus className="w-4 h-4 mr-2" />
-            Add Your First Card
+            {t('dashboard.flashcards.addFirstCard')}
           </Button>
         </div>
       ) : filteredCards.length > 0 ? (
@@ -541,7 +351,7 @@ const FlashcardApp = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 bg-gradient-to-r from-brand-purple to-brand-gold"
+              className="absolute top-4 right-4 bg-brand-purple hover:bg-brand-purple-dark text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 setEditingCard(filteredCards[currentIndex]);
@@ -556,16 +366,15 @@ const FlashcardApp = () => {
                     ? filteredCards[currentIndex].back_text
                     : filteredCards[currentIndex].front_text}
                 </div>
-                <div className="text-sm text-gray-500 mt-4">Click to flip</div>
+                <div className="text-sm text-gray-500 mt-4">{t('dashboard.flashcards.clickToFlip')}</div>
                 {filteredCards[currentIndex].review_count > 0 && (
                   <div className="mt-2">
-                    Reviews: {filteredCards[currentIndex].review_count} | Last
-                    reviewed:{" "}
+                    {t('dashboard.flashcards.reviews')}: {filteredCards[currentIndex].review_count} | {t('dashboard.flashcards.lastReviewed')}:{" "}
                     {filteredCards[currentIndex].last_reviewed
                       ? new Date(
-                          filteredCards[currentIndex].last_reviewed
-                        ).toLocaleDateString()
-                      : "N/A"}
+                        filteredCards[currentIndex].last_reviewed
+                      ).toLocaleDateString()
+                      : t('dashboard.flashcards.na')}
                   </div>
                 )}
               </div>
@@ -583,7 +392,7 @@ const FlashcardApp = () => {
               className="w-32"
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
-              Previous
+              {t('dashboard.flashcards.previous')}
             </Button>
             <Button
               variant="outline"
@@ -594,19 +403,8 @@ const FlashcardApp = () => {
               disabled={currentIndex === filteredCards.length - 1}
               className="w-32"
             >
-              Next
+              {t('dashboard.flashcards.next')}
               <ChevronRight className="w-4 h-4 ml-2" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-2 right-2 z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditingCard(filteredCards[currentIndex]);
-              }}
-            >
-              <Pencil className="h-4 w-4" />
             </Button>
           </div>
 
@@ -618,7 +416,7 @@ const FlashcardApp = () => {
               }
             >
               <RefreshCw className="w-4 h-4 mr-2" />
-              Review Later
+              {t('dashboard.flashcards.reviewLater')}
             </Button>
             <Button
               className="w-40 bg-green-500 hover:bg-green-600 text-white"
@@ -627,17 +425,20 @@ const FlashcardApp = () => {
               }
             >
               <Check className="w-4 h-4 mr-2" />
-              Mark as Known
+              {t('dashboard.flashcards.markKnown')}
             </Button>
           </div>
 
           <div className="text-center text-sm text-gray-500">
-            Card {currentIndex + 1} of {filteredCards.length}
+            {t('dashboard.flashcards.cardCount', {
+              current: String(currentIndex + 1),
+              total: String(filteredCards.length)
+            })}
           </div>
         </div>
       ) : (
         <div className="text-center text-gray-500 py-12">
-          No cards match the current filter
+          {t('dashboard.flashcards.noMatchingCards')}
         </div>
       )}
     </div>
@@ -647,12 +448,10 @@ const FlashcardApp = () => {
     <>
       {isAddingCard && (
         <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>New Card</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-6 space-y-4">
+            <h3 className="text-lg font-medium">{t('dashboard.flashcards.newCard')}</h3>
             <div className="space-y-2">
-              <Label htmlFor="frontText">Front</Label>
+              <Label htmlFor="frontText">{t('dashboard.flashcards.front')}</Label>
               <Input
                 id="frontText"
                 value={formData.frontText}
@@ -662,18 +461,18 @@ const FlashcardApp = () => {
                     frontText: e.target.value,
                   }))
                 }
-                placeholder="Front text"
+                placeholder={t('dashboard.flashcards.frontText')}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="backText">Back</Label>
+              <Label htmlFor="backText">{t('dashboard.flashcards.back')}</Label>
               <Input
                 id="backText"
                 value={formData.backText}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, backText: e.target.value }))
                 }
-                placeholder="Back text"
+                placeholder={t('dashboard.flashcards.backText')}
               />
             </div>
             <div className="flex gap-2">
@@ -684,53 +483,39 @@ const FlashcardApp = () => {
                   !formData.frontText || !formData.backText || isLoading
                 }
               >
-                Add
+                {t('dashboard.flashcards.add')}
               </Button>
               <Button
                 variant="outline"
                 className="flex-1"
                 onClick={() => setIsAddingCard(false)}
               >
-                Cancel
+                {t('dashboard.flashcards.cancel')}
               </Button>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {isAddingDeck && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <Card className="w-96">
-            <CardHeader>
-              <CardTitle>New Deck</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Input
-                placeholder="Deck name"
-                value={formData.deckName}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, deckName: e.target.value }))
-                }
-              />
-              <div className="flex gap-2">
-                <Button
-                  className="flex-1"
-                  onClick={handleAddDeck}
-                  disabled={!formData.deckName || isLoading}
-                >
-                  Create
-                </Button>
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={() => setIsAddingDeck(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+      {isImporting && selectedDeck && (
+        <ImportExcelModal
+          deckId={selectedDeck.id}
+          isOpen={isImporting}
+          onClose={() => setIsImporting(false)}
+          onImportSuccess={() => {
+            fetchCards();
+            onCardUpdate();
+          }}
+        />
+      )}
+
+      {editingCard && (
+        <EditCardModal
+          card={editingCard}
+          isOpen={true}
+          onClose={() => setEditingCard(null)}
+          onSave={handleEditCard}
+        />
       )}
     </>
   );
@@ -741,14 +526,6 @@ const FlashcardApp = () => {
       {renderHeader()}
       {renderMainContent()}
       {renderModals()}
-      {editingCard && (
-        <EditCardModal
-          card={editingCard}
-          isOpen={true}
-          onClose={() => setEditingCard(null)}
-          onSave={handleEditCard}
-        />
-      )}
     </div>
   );
 };

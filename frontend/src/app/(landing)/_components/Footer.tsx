@@ -1,12 +1,14 @@
-// src/app/(landing)/_components/Footer.tsx
-import React from "react";
-import Link from "next/link";
+'use client';
 
-// Import base translations
-import enTranslations from "@/locales/en/footer.json";
-import esTranslations from "@/locales/es/footer.json";
-import frTranslations from "@/locales/fr/footer.json";
-import nlTranslations from "@/locales/nl/footer.json";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import LanguageSwitcher from './LanguageSwitcher';
+
+// Import translations
+import enTranslations from '@/core/i18n/translations/en/footer.json';
+import esTranslations from '@/core/i18n/translations/es/footer.json';
+import frTranslations from '@/core/i18n/translations/fr/footer.json';
+import nlTranslations from '@/core/i18n/translations/nl/footer.json';
 
 interface NavItem {
   name: string;
@@ -88,28 +90,52 @@ const Container: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 // Supported languages
-type AvailableLocales = "en" | "fr" | "es" | "nl";
-
-// Merge all translations
-const translations = {
-  en: enTranslations.en,
-  es: esTranslations.es,
-  fr: frTranslations?.fr || enTranslations.en, // Fallback to English if not available
-  nl: nlTranslations?.nl || enTranslations.en, // Fallback to English if not available
+type AvailableLocales = 'en' | 'fr' | 'es' | 'nl';
+type TranslationType = typeof enTranslations.en & {
+  language?: { title: string };
 };
 
 export const Footer: React.FC = () => {
-  // Get current locale
-  // Extract locale from path or use default
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const localeParts = pathname.match(/^\/(en|fr|es|nl)\//) || [];
-  const detectedLocale = localeParts[1] as AvailableLocales;
-  
-  // Use detected locale or fallback to English
-  const locale = detectedLocale || "en" as AvailableLocales;
-  
-  // Get translations for current locale
-  const t = translations[locale];
+  const [currentLocale, setCurrentLocale] = useState<AvailableLocales>('fr');
+
+  // Load language from localStorage on startup
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage && ['fr', 'en', 'es', 'nl'].includes(savedLanguage)) {
+      setCurrentLocale(savedLanguage as AvailableLocales);
+    }
+  }, []);
+
+  // Listen for language changes from other components
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage && ['fr', 'en', 'es', 'nl'].includes(savedLanguage)) {
+        setCurrentLocale(savedLanguage as AvailableLocales);
+      }
+    };
+
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
+
+  // Translation helper function
+  const getTranslation = (locale: AvailableLocales): TranslationType => {
+    const translations: Record<AvailableLocales, TranslationType> = {
+      fr: frTranslations.fr as TranslationType,
+      en: enTranslations.en,
+      es: esTranslations.es as TranslationType,
+      nl: nlTranslations.nl as TranslationType
+    };
+    
+    return translations[locale] || translations.en;
+  };
+
+  // Get current translation
+  const t = getTranslation(currentLocale);
   
   // Map social icons to their components
   const socialIconMap: { [key: string]: React.FC<{ size?: number }> } = {
@@ -148,27 +174,42 @@ export const Footer: React.FC = () => {
             {/* Legal Links */}
             <LinkSection title={t.legal.title} items={t.legal.items} />
 
-            {/* Social Links */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">
-                {t.social.title}
-              </h3>
-              <div className="flex gap-4">
-                {t.social.items.map((item: SocialItem) => {
-                  const Icon = socialIconMap[item.name];
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-50 hover:text-indigo-600 dark:hover:bg-gray-700 dark:hover:text-indigo-400 transition-all duration-200 shadow-sm"
-                      aria-label={item.name}
-                    >
-                      {Icon && <Icon size={20} />}
-                    </a>
-                  );
-                })}
+            {/* Social Links & Language Switcher Section */}
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">
+                  {t.social.title}
+                </h3>
+                <div className="flex gap-4">
+                  {t.social.items.map((item: SocialItem) => {
+                    const Icon = socialIconMap[item.name];
+                    return (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-50 hover:text-indigo-600 dark:hover:bg-gray-700 dark:hover:text-indigo-400 transition-all duration-200 shadow-sm"
+                        aria-label={item.name}
+                      >
+                        {Icon && <Icon size={20} />}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Language Switcher */}
+              <div className="pt-4">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-3">
+                  {t.language?.title || "Language"}
+                </h3>
+                <LanguageSwitcher 
+                  variant="dropdown" 
+                  size="sm" 
+                  showLabels={true} 
+                  alignment="start"
+                />
               </div>
             </div>
           </div>
@@ -178,9 +219,6 @@ export const Footer: React.FC = () => {
             <div className="text-center">
               <p className="text-gray-600 dark:text-gray-400">
                 {t.copyright.rights.replace('{year}', currentYear.toString())}
-              </p>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
-                {t.copyright.tagline}
               </p>
             </div>
           </div>

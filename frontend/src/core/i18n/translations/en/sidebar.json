@@ -1,0 +1,21 @@
+{
+  "sidebar": {
+    "main": "Main",
+    "dashboard": "Dashboard",
+    "learning": "Learning",
+    "revision": "Revision",
+    "flashcard": "Flashcards",
+    "tools": "Tools",
+    "notes": "Notes",
+    "progress": "Progress",
+    "settings": "Settings"
+  },
+  "auth": {
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register",
+    "logoutSuccess": "Logged out successfully",
+    "comeBackSoon": "Come back soon!"
+  }
+  }
+  

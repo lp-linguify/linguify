@@ -1,6 +1,6 @@
 // src/app/(dashboard)/(apps)/task/page.tsx
 import { Metadata } from 'next';
-import TaskManager from './_components/TaskManager';
+import TaskManager from '../../../../addons/task/components/TaskManager';
 
 export const metadata: Metadata = {
   title: 'Tasks | Linguify',

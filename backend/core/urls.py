@@ -16,9 +16,11 @@ urlpatterns = [
     path('api/auth/', include('authentication.urls')),
     path('api/v1/course/', include('course.urls', namespace='course')),
     path('api/v1/revision/', include('revision.urls', namespace='revision')),
-    path('api/v1/flashcard/', include('flashcard.urls', namespace='flashcard')),
     path('api/v1/notebook/', include('notebook.urls', namespace='notebook')),
-    path('api/v1/chat/', include('chat.urls', namespace='chat')),
-    path('api/v1/task/', include('task.urls', namespace='task')),
     path('api/contact/', views.contact_view, name='contact'),
+    path('api/v1/progress/', include('progress.urls', namespace='progress')),
+    # path('api/v1/flashcard/', include('flashcard.urls', namespace='flashcard')),
+    # path('api/v1/task/', include('task.urls', namespace='task')),
+    # path('api/v1/chat/', include('chat.urls', namespace='chat')),
+
 ]

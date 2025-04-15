@@ -1,0 +1,37 @@
+<!-- backend/apps/course/templates/admin/add_language_form.html -->
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block content %}
+<div id="content-main">
+  <form method="post" action="">
+    {% csrf_token %}
+    <fieldset class="module aligned">
+      <h2>Add Language to Theory</h2>
+      
+      <div class="form-row">
+        <label for="language_code">Language Code:</label>
+        <input type="text" name="language_code" id="language_code" required>
+        <p class="help">Two letter code (e.g. 'it' for Italian)</p>
+      </div>
+      
+      <div class="form-row">
+        <label for="content">Content:</label>
+        <textarea name="content" id="content" rows="4" cols="50"></textarea>
+      </div>
+      
+      <div class="form-row">
+        <label for="explanation">Explanation:</label>
+        <textarea name="explanation" id="explanation" rows="4" cols="50"></textarea>
+      </div>
+      
+      <!-- Ajoutez d'autres champs selon besoin -->
+      
+    </fieldset>
+    
+    <div class="submit-row">
+      <input type="submit" value="Add Language" class="default">
+    </div>
+  </form>
+</div>
+{% endblock %}

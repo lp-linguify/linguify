@@ -1,18 +1,17 @@
-// src/app/%28dashboard%29/%28apps%29/learning/%5BunitId%5D/page.tsx
+// src/app/(dashboard)/(apps)/learning/[unitId]/[lessonId]/page.tsx
 import { Suspense } from 'react';
-import Lessons from '../_components/Lessons';
+import LessonContent from '../../../../../addons/learning/components/LessonContent/LessonContent';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
-  params: Promise<{ unitId: string }>;
+  params: Promise<{ unitId: string; lessonId: string }>;
 }
 
+export default async function LessonPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const { unitId, lessonId } = resolvedParams;
 
-export default async function UnitPage({ params }: PageProps) {
-  const resolvedParams = await params; // On attend la résolution de la promesse
-  const { unitId } = resolvedParams;
-
-  if (!unitId || isNaN(Number(unitId))) {
+  if (!unitId || !lessonId || isNaN(Number(unitId)) || isNaN(Number(lessonId))) {
     return notFound();
   }
 
@@ -20,11 +19,11 @@ export default async function UnitPage({ params }: PageProps) {
     <Suspense
       fallback={
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-pulse">Loading lessons...</div>
+          <div className="animate-pulse">Loading lesson content...</div>
         </div>
       }
     >
-      <Lessons unitId={unitId} />
+      <LessonContent lessonId={lessonId} unitId={unitId} />
     </Suspense>
   );
 }

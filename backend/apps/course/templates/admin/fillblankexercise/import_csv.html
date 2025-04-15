@@ -1,0 +1,80 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Home</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_label|capfirst }}</a>
+  &rsaquo; <a href="{% url 'admin:course_fillblankexercise_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; Import from CSV
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div class="module aligned">
+    <h1>Import Fill in the Blank Exercises from CSV</h1>
+    
+    <div class="description">
+      <p>Upload a CSV file to create multiple fill-in-the-blank exercises at once. 
+         The CSV should have specific columns for each language you want to include.</p>
+    </div>
+    
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <fieldset class="module aligned">
+        <div class="form-row field-content_lesson">
+          <div>
+            <label for="id_content_lesson" class="required">Content Lesson:</label>
+            <select name="content_lesson" id="id_content_lesson" required>
+              <option value="">---------</option>
+              {% for content_lesson in content_lessons %}
+                <option value="{{ content_lesson.id }}">
+                  [{{ content_lesson.lesson.unit.level }}] {{ content_lesson.lesson.unit.title_en }} - 
+                  {{ content_lesson.lesson.title_en }} - {{ content_lesson.title_en }}
+                </option>
+              {% endfor %}
+            </select>
+            <div class="help">The content lesson these exercises belong to</div>
+          </div>
+        </div>
+        
+        <div class="form-row field-csv_file">
+          <div>
+            <label for="id_csv_file" class="required">CSV File:</label>
+            <input type="file" name="csv_file" id="id_csv_file" accept=".csv" required>
+            <div class="help">Upload a CSV file with the exercise data</div>
+          </div>
+        </div>
+      </fieldset>
+      
+      <div class="submit-row">
+        <input type="submit" value="Import CSV" class="default">
+        <a href="{% url 'admin:course_fillblankexercise_export_template' %}" class="button">Download Template</a>
+      </div>
+    </form>
+    
+    <div class="module">
+      <h2>CSV Format Requirements</h2>
+      <div class="help">
+        <p>Your CSV file should have the following columns:</p>
+        <ul>
+          <li><strong>order</strong> - The display order of the exercise (integer)</li>
+          <li><strong>difficulty</strong> - One of: 'easy', 'medium', 'hard'</li>
+          <li><strong>tags</strong> - Optional comma-separated list of tags</li>
+          <li><strong>sentence_<em>lang</em></strong> - The sentence with ___ marking the blank position (e.g. sentence_en, sentence_fr)</li>
+          <li><strong>options_<em>lang</em></strong> - Comma-separated list of possible answers (e.g. options_en, options_fr)</li>
+          <li><strong>answer_<em>lang</em></strong> - The correct answer (e.g. answer_en, answer_fr)</li>
+          <li><strong>hint_<em>lang</em></strong> - Optional hint (e.g. hint_en, hint_fr)</li>
+          <li><strong>explanation_<em>lang</em></strong> - Optional explanation (e.g. explanation_en, explanation_fr)</li>
+        </ul>
+        <p>Where <em>lang</em> is one of: en, fr, es, nl, etc.</p>
+      </div>
+      
+      <h3>Example CSV</h3>
+      <pre style="background-color: #f5f5f5; padding: 10px; border: 1px solid #ddd; overflow-x: auto; max-height: 200px;">{{ sample_csv }}</pre>
+    </div>
+  </div>
+</div>
+{% endblock %}

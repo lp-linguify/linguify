@@ -1,0 +1,38 @@
+{
+    "en": {
+      "navigation": {
+        "title": "Navigation",
+        "items": [
+          { "name": "Home", "href": "/" },
+          { "name": "Features", "href": "/features" },
+          { "name": "Pricing", "href": "/pricing" },
+          { "name": "About", "href": "/company" },
+          { "name": "Contact", "href": "/contact" }
+        ]
+      },
+      "legal": {
+        "title": "Legal",
+        "items": [
+          { "name": "Terms", "href": "/annexes/terms" },
+          { "name": "Privacy", "href": "/annexes/privacy" },
+          { "name": "Legal Notice", "href": "/annexes/legal" }
+        ]
+      },
+      "social": {
+        "title": "Follow Us",
+        "items": [
+          { "name": "LinkedIn", "href": "https://linkedin.com/company/next-corporation" },
+          { "name": "Twitter", "href": "https://twitter.com/next_corporation" },
+          { "name": "Instagram", "href": "https://instagram.com/next_corporation" }
+        ]
+      },
+      "brand": {
+        "description": "Linguify is a language learning platform created by Next-Corporation, designed to make language learning accessible, engaging, and effective for everyone. Join us in eliminating language barriers worldwide.",
+        "companyLink": "A Next-Corporation product"
+      },
+      "copyright": {
+        "rights": "© {year} Next-Corporation. All rights reserved.",
+        "tagline": "Linguify is committed to making education accessible worldwide."
+        }
+    }
+  }

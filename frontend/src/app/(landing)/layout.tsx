@@ -1,10 +1,10 @@
-// src/app/(landing)/layout-client.tsx
+// src/app/(landing)/layout.tsx
 'use client';
 
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "@/providers/AuthProvider";
-import { LanguageProvider } from "@/components/LanguageContext";
+import { useAuthContext } from "@/core/auth/AuthProvider";
+import { LanguageProvider } from "@/core/i18n/i18nProvider";
 import { Navbar } from "./_components/Navbar";
 import { Footer } from "./_components/Footer";
 
@@ -13,7 +13,7 @@ export default function LandingLayoutClient({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
 
