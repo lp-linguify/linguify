@@ -20,7 +20,7 @@ drf-spectacular==0.28.0
 redis==6.1.0
 PyJWT==2.10.1
 supabase==2.8.0
-gunicorn==21.2.0
+gunicorn==23.0.0
 whitenoise==6.6.0
 channels-redis==4.2.0
 dj-database-url==2.1.0
